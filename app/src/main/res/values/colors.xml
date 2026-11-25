@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Brand Colors (Pondok Bukit Coffee) -->
-    <color name="brand_cream_bg">#F7EFE5</color>        <!-- Background utama aplikasi -->
+    <color name="brand_cream_bg">#EFDFBE</color>        <!-- Exact warm oat background from Pondok Bukit logo -->
     <color name="brand_surface">#FFFFFF</color>         <!-- Card, Dialog & Input field background -->
     <color name="brand_terracotta">#C4683C</color>      <!-- Primary Accent: Button, highlight -->
     <color name="brand_terracotta_dark">#A7542C</color> <!-- Button pressed state -->

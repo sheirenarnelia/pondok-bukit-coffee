@@ -9,80 +9,58 @@
     android:padding="24dp"
     tools:context=".MainActivity">
 
+    <!-- Seamless Logo Floating on Warm Background -->
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="290dp"
+        android:layout_height="290dp"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
+        android:scaleType="fitCenter"
         android:src="@drawable/logo_pondokbukit"
-        app:layout_constraintBottom_toTopOf="@+id/tvWelcomeTitle"
+        app:layout_constraintBottom_toTopOf="@+id/llButtonContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_bias="0.45" />
 
-    <TextView
-        android:id="@+id/tvWelcomeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/app_name"
-        android:textColor="@color/brand_espresso"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tvWelcomeSubtitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
-
-    <TextView
-        android:id="@+id/tvWelcomeSubtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="@string/tagline"
-        android:textColor="@color/brand_roast"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeTitle" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogin"
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:id="@+id/llButtonContainer"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginTop="36dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/btn_login"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:backgroundTint="@color/brand_terracotta"
-        app:cornerRadius="14dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeSubtitle" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnRegister"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/btn_register"
-        android:textAllCaps="false"
-        android:textColor="@color/brand_terracotta"
-        android:textSize="16sp"
-        app:cornerRadius="14dp"
-        app:strokeColor="@color/brand_terracotta"
-        app:strokeWidth="1.5dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/btn_login"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:backgroundTint="@color/brand_terracotta"
+            app:cornerRadius="14dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegister"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/btn_register"
+            android:textAllCaps="false"
+            android:textColor="@color/brand_terracotta"
+            android:textSize="16sp"
+            app:cornerRadius="14dp"
+            app:strokeColor="@color/brand_terracotta"
+            app:strokeWidth="1.5dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
