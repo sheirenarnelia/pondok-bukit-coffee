@@ -14,6 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -144,12 +150,52 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Register the new user
-        userManager.registerUser(email, password, fullName, "user");
+        // Show loading state
+        btnRegisterSubmit.setEnabled(false);
+        btnRegisterSubmit.setText("Creating account...");
 
-        Toast.makeText(this, "Account created successfully! Please sign in.", Toast.LENGTH_LONG).show();
+        // 1. Firebase Authentication Registration
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener(authResult -> {
+                    String uid = authResult.getUser() != null ? authResult.getUser().getUid() : "";
 
-        // Redirect to LoginActivity
+                    // 2. Save user profile to Cloud Firestore
+                    Map<String, Object> userData = new HashMap<>();
+                    userData.put("uid", uid);
+                    userData.put("fullName", fullName);
+                    userData.put("email", email);
+                    userData.put("role", "user");
+                    userData.put("createdAt", FieldValue.serverTimestamp());
+
+                    FirebaseFirestore.getInstance().collection("users").document(uid).set(userData)
+                            .addOnSuccessListener(aVoid -> {
+                                userManager.registerUser(email, password, fullName, "user");
+                                Toast.makeText(RegisterActivity.this, "Account created successfully in Firebase!", Toast.LENGTH_SHORT).show();
+                                navigateToLogin(email);
+                            })
+                            .addOnFailureListener(e -> {
+                                userManager.registerUser(email, password, fullName, "user");
+                                Toast.makeText(RegisterActivity.this, "Account created in Auth!", Toast.LENGTH_SHORT).show();
+                                navigateToLogin(email);
+                            });
+                })
+                .addOnFailureListener(e -> {
+                    btnRegisterSubmit.setEnabled(true);
+                    btnRegisterSubmit.setText(R.string.btn_register);
+
+                    if (e.getMessage() != null && e.getMessage().contains("already in use")) {
+                        tilRegisterEmail.setError("This email is already registered. Please sign in instead.");
+                        tilRegisterEmail.requestFocus();
+                    } else {
+                        // Offline / local backup fallback
+                        userManager.registerUser(email, password, fullName, "user");
+                        Toast.makeText(RegisterActivity.this, "Registered locally (" + e.getMessage() + ")", Toast.LENGTH_LONG).show();
+                        navigateToLogin(email);
+                    }
+                });
+    }
+
+    private void navigateToLogin(String email) {
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
         intent.putExtra("REGISTERED_EMAIL", email);
         startActivity(intent);

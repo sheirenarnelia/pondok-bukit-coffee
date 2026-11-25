@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -105,23 +107,69 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Authentication Check
-        if (!userManager.isEmailRegistered(email)) {
-            tilEmail.setError("Account not found. Please register an account first.");
-            tilEmail.requestFocus();
-            return;
-        }
+        // Show loading state
+        btnLoginSubmit.setEnabled(false);
+        btnLoginSubmit.setText("Signing in...");
 
-        if (!userManager.checkPassword(email, password)) {
-            tilPassword.setError("Incorrect password. Please try again.");
-            tilPassword.requestFocus();
-            return;
-        }
+        // 1. Try Firebase Authentication first
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener(authResult -> {
+                    String uid = authResult.getUser() != null ? authResult.getUser().getUid() : "";
 
-        // Role Routing Logic (1 App 2 Roles)
-        String role = userManager.getUserRole(email);
-        String fullName = userManager.getUserFullName(email);
+                    // Query role from Firestore
+                    FirebaseFirestore.getInstance().collection("users").document(uid).get()
+                            .addOnSuccessListener(documentSnapshot -> {
+                                String role = documentSnapshot.exists() && documentSnapshot.getString("role") != null
+                                        ? documentSnapshot.getString("role")
+                                        : "user";
+                                String fullName = documentSnapshot.exists() && documentSnapshot.getString("fullName") != null
+                                        ? documentSnapshot.getString("fullName")
+                                        : userManager.getUserFullName(email);
 
+                                routeUserByRole(role, fullName);
+                            })
+                            .addOnFailureListener(e -> {
+                                // Firestore read failed, fallback to local role mapping
+                                String role = userManager.getUserRole(email);
+                                String fullName = userManager.getUserFullName(email);
+                                routeUserByRole(role, fullName);
+                            });
+                })
+                .addOnFailureListener(e -> {
+                    // 2. Fallback to Local Auth (for pre-seeded demo accounts or offline test)
+                    if (userManager.isEmailRegistered(email)) {
+                        if (userManager.checkPassword(email, password)) {
+                            String role = userManager.getUserRole(email);
+                            String fullName = userManager.getUserFullName(email);
+                            routeUserByRole(role, fullName);
+                            return;
+                        } else {
+                            btnLoginSubmit.setEnabled(true);
+                            btnLoginSubmit.setText(R.string.btn_login);
+                            tilPassword.setError("Incorrect password. Please try again.");
+                            tilPassword.requestFocus();
+                            return;
+                        }
+                    }
+
+                    btnLoginSubmit.setEnabled(true);
+                    btnLoginSubmit.setText(R.string.btn_login);
+
+                    String msg = e.getMessage() != null ? e.getMessage() : "Authentication failed";
+                    if (msg.contains("no user record") || msg.contains("user-not-found") || msg.contains("INVALID_LOGIN_CREDENTIALS")) {
+                        tilEmail.setError("Account not found or invalid credentials. Please register first.");
+                        tilEmail.requestFocus();
+                    } else if (msg.contains("password")) {
+                        tilPassword.setError("Incorrect password. Please try again.");
+                        tilPassword.requestFocus();
+                    } else {
+                        tilEmail.setError("Sign in error: " + msg);
+                        tilEmail.requestFocus();
+                    }
+                });
+    }
+
+    private void routeUserByRole(String role, String fullName) {
         if ("admin".equalsIgnoreCase(role)) {
             Toast.makeText(this, "Welcome back, " + fullName + " (Admin)", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this, AdminOrderListActivity.class);
