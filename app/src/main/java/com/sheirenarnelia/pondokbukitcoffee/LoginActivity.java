@@ -21,11 +21,14 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText etEmail, etPassword;
     private MaterialButton btnLoginSubmit;
     private TextView tvGoToRegister;
+    private UserManager userManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        userManager = new UserManager(this);
 
         // Initialize Views
         tilEmail = findViewById(R.id.tilEmail);
@@ -34,6 +37,13 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnLoginSubmit = findViewById(R.id.btnLoginSubmit);
         tvGoToRegister = findViewById(R.id.tvGoToRegister);
+
+        // Check if redirected from RegisterActivity with prefilled email
+        String registeredEmail = getIntent().getStringExtra("REGISTERED_EMAIL");
+        if (registeredEmail != null && !registeredEmail.isEmpty()) {
+            etEmail.setText(registeredEmail);
+            etPassword.requestFocus();
+        }
 
         // Auto-clear error when user types
         setupErrorClearing();
@@ -95,13 +105,29 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        // Authentication Check
+        if (!userManager.isEmailRegistered(email)) {
+            tilEmail.setError("Account not found. Please register an account first.");
+            tilEmail.requestFocus();
+            return;
+        }
+
+        if (!userManager.checkPassword(email, password)) {
+            tilPassword.setError("Incorrect password. Please try again.");
+            tilPassword.requestFocus();
+            return;
+        }
+
         // Role Routing Logic (1 App 2 Roles)
-        if (email.equalsIgnoreCase("admin@pondokbukit.com") || email.toLowerCase().contains("admin")) {
-            Toast.makeText(this, "Welcome, Admin! Redirecting to Barista Dashboard...", Toast.LENGTH_SHORT).show();
+        String role = userManager.getUserRole(email);
+        String fullName = userManager.getUserFullName(email);
+
+        if ("admin".equalsIgnoreCase(role)) {
+            Toast.makeText(this, "Welcome back, " + fullName + " (Admin)", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this, AdminOrderListActivity.class);
             startActivity(intent);
         } else {
-            Toast.makeText(this, "Signed in successfully as: " + email, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Signed in successfully as " + fullName, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this, CartActivity.class);
             startActivity(intent);
         }

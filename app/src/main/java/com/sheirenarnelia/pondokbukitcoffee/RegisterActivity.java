@@ -21,11 +21,14 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText etFullName, etRegisterEmail, etRegisterPassword, etConfirmPassword;
     private MaterialButton btnRegisterSubmit;
     private TextView tvGoToLogin;
+    private UserManager userManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        userManager = new UserManager(this);
 
         // Initialize Views
         tilFullName = findViewById(R.id.tilFullName);
@@ -114,6 +117,9 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             tilRegisterEmail.setError("Please enter a valid email address");
             isValid = false;
+        } else if (userManager.isEmailRegistered(email)) {
+            tilRegisterEmail.setError("This email is already registered. Please sign in instead.");
+            isValid = false;
         }
 
         // Password Validation
@@ -138,10 +144,16 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Temporary registration feedback before Firebase is integrated
-        Toast.makeText(this, "Registration successful for: " + fullName, Toast.LENGTH_SHORT).show();
+        // Register the new user
+        userManager.registerUser(email, password, fullName, "user");
 
-        // Note: In Day 2, FirebaseAuth.createUserWithEmailAndPassword & Firestore user doc will be placed here.
+        Toast.makeText(this, "Account created successfully! Please sign in.", Toast.LENGTH_LONG).show();
+
+        // Redirect to LoginActivity
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        intent.putExtra("REGISTERED_EMAIL", email);
+        startActivity(intent);
+        finish();
     }
 
     private abstract static class SimpleTextWatcher implements TextWatcher {
