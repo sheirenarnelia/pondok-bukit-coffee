@@ -2,11 +2,27 @@
     <string name="app_name">Pondok Bukit</string>
     <string name="tagline">Your Cozy Corner for Coffee</string>
     
-    <!-- Auth Strings -->
-    <string name="login_title">Selamat Datang Kembali</string>
-    <string name="login_subtitle">Silakan masuk ke akun Pondok Bukit Anda</string>
-    <string name="email_hint">Alamat Email</string>
-    <string name="password_hint">Kata Sandi</string>
+    <!-- Welcome Screen -->
     <string name="btn_login">Masuk</string>
     <string name="btn_register">Daftar Akun Baru</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">Selamat Datang!</string>
+    <string name="login_subtitle">Nikmati secangkir kopi favorit Anda hari ini</string>
+    <string name="email_label">Alamat Email</string>
+    <string name="email_hint">nama@email.com</string>
+    <string name="password_label">Kata Sandi</string>
+    <string name="password_hint">Masukkan kata sandi</string>
+    <string name="no_account_text">Belum punya akun? </string>
+    <string name="register_link">Daftar sekarang</string>
+
+    <!-- Register Screen -->
+    <string name="register_title">Buat Akun Baru</string>
+    <string name="register_subtitle">Daftar untuk mulai memesan kopi di Pondok Bukit</string>
+    <string name="name_label">Nama Lengkap</string>
+    <string name="name_hint">Masukkan nama lengkap</string>
+    <string name="confirm_password_label">Konfirmasi Kata Sandi</string>
+    <string name="confirm_password_hint">Ulangi kata sandi Anda</string>
+    <string name="have_account_text">Sudah punya akun? </string>
+    <string name="login_link">Masuk di sini</string>
 </resources>
