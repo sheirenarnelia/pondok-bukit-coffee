@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Hero Image of Pondok Bukit Scenery -->
+    <!-- Pure High-Definition Scenery Photo -->
     <ImageView
         android:id="@+id/ivHeroImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="Pondok Bukit Coffee Shop"
+        android:contentDescription="Pondok Bukit Scenery"
         android:scaleType="centerCrop"
         android:src="@drawable/img_pondok_garden"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,67 +17,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Dark Gradient Overlay for optimal contrast & luxury feel -->
+    <!-- Subtle Vignette Scrim at Top & Bottom for Brand & Dots Visibility -->
     <View
-        android:id="@+id/viewScrim"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         android:background="@drawable/scrim_gradient"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:rotation="180"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Text Overlay Container at Bottom of Slide -->
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="24dp"
-        android:paddingBottom="42dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <!-- Atmosphere Category Kicker -->
-        <TextView
-            android:id="@+id/tvHeroTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_input_field"
-            android:backgroundTint="#55150F0D"
-            android:fontFamily="@font/plus_jakarta_sans_semibold"
-            android:letterSpacing="0.10"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="4dp"
-            android:text="LUSH GARDEN &amp; SAUNG"
-            android:textColor="#F3ECE6"
-            android:textSize="10sp" />
-
-        <!-- Luxury Editorial Slide Title -->
-        <TextView
-            android:id="@+id/tvSlideTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/playfair_display_bold"
-            android:letterSpacing="0.01"
-            android:text="Tranquil Hillside Saung"
-            android:textColor="@color/white"
-            android:textSize="26sp" />
-
-        <!-- Slide Subtitle -->
-        <TextView
-            android:id="@+id/tvSlideSubtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/plus_jakarta_sans_medium"
-            android:lineSpacingExtra="2dp"
-            android:text="Sip handcrafted coffee in traditional gazebos surrounded by cooling mountain breeze."
-            android:textColor="#E0D7D0"
-            android:textSize="13sp" />
-
-    </LinearLayout>
+        android:layout_height="70dp"
+        android:background="@drawable/scrim_gradient"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

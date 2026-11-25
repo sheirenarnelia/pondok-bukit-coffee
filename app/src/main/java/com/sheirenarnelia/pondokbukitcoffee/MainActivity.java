@@ -1,23 +1,36 @@
 package com.sheirenarnelia.pondokbukitcoffee;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.SpannableString;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
-    private MaterialButton btnLogin, btnRegister;
+    private ViewPager2 vpHeroSlider;
+    private LinearLayout llDotsIndicator;
     private TextView tvHeroTitle;
+    private MaterialButton btnLogin, btnRegister;
+
+    private final Handler sliderHandler = new Handler(Looper.getMainLooper());
+    private Runnable sliderRunnable;
+    private List<Integer> photoResList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +38,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initialize Views
+        vpHeroSlider = findViewById(R.id.vpHeroSlider);
+        llDotsIndicator = findViewById(R.id.llDotsIndicator);
         tvHeroTitle = findViewById(R.id.tvHeroTitle);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
 
-        // Apply Two-Tone Luxury Headline ("Your Cozy Corner" in Espresso, "for Coffee Moments" in Terracotta)
+        // Apply Two-Tone Luxury Headline
         styleHeadlineText();
+
+        // Setup Carousel with the 3 Scenery Photos
+        setupHeroSlider();
 
         // Navigate to Login Screen via Intent
         btnLogin.setOnClickListener(v -> {
@@ -55,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         int espressoColor = ContextCompat.getColor(this, R.color.brand_espresso);
         int terracottaColor = ContextCompat.getColor(this, R.color.brand_terracotta);
 
-        // Line 1: Deep Espresso
+        // Line 1: Deep Roast Espresso
         ssb.setSpan(
                 new ForegroundColorSpan(espressoColor),
                 0,
@@ -72,5 +90,91 @@ public class MainActivity extends AppCompatActivity {
         );
 
         tvHeroTitle.setText(ssb);
+    }
+
+    private void setupHeroSlider() {
+        photoResList = new ArrayList<>();
+        // 3 Real Scenery Photos of Pondok Bukit
+        photoResList.add(R.drawable.img_pondok_garden);
+        photoResList.add(R.drawable.img_pondok_outdoor);
+        photoResList.add(R.drawable.img_pondok_view);
+
+        HeroSliderAdapter adapter = new HeroSliderAdapter(photoResList);
+        vpHeroSlider.setAdapter(adapter);
+
+        setupDotsIndicator(photoResList.size());
+        setCurrentDot(0);
+
+        vpHeroSlider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                setCurrentDot(position);
+                sliderHandler.removeCallbacks(sliderRunnable);
+                sliderHandler.postDelayed(sliderRunnable, 4000);
+            }
+        });
+
+        // Auto-scroll every 4 seconds
+        sliderRunnable = new Runnable() {
+            @Override
+            public void run() {
+                int nextIndex = (vpHeroSlider.getCurrentItem() + 1) % photoResList.size();
+                vpHeroSlider.setCurrentItem(nextIndex, true);
+                sliderHandler.postDelayed(this, 4000);
+            }
+        };
+    }
+
+    private void setupDotsIndicator(int count) {
+        llDotsIndicator.removeAllViews();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(6, 0, 6, 0);
+
+        for (int i = 0; i < count; i++) {
+            ImageView dot = new ImageView(this);
+            dot.setImageDrawable(getDrawable(R.drawable.dot_inactive));
+            dot.setLayoutParams(params);
+            llDotsIndicator.addView(dot);
+        }
+    }
+
+    private void setCurrentDot(int index) {
+        int childCount = llDotsIndicator.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            ImageView dot = (ImageView) llDotsIndicator.getChildAt(i);
+            if (i == index) {
+                dot.setImageDrawable(getDrawable(R.drawable.dot_active));
+            } else {
+                dot.setImageDrawable(getDrawable(R.drawable.dot_inactive));
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sliderRunnable != null) {
+            sliderHandler.postDelayed(sliderRunnable, 4000);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (sliderRunnable != null) {
+            sliderHandler.removeCallbacks(sliderRunnable);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (sliderRunnable != null) {
+            sliderHandler.removeCallbacks(sliderRunnable);
+        }
     }
 }
