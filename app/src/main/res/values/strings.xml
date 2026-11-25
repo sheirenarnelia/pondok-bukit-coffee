@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Pondok Bukit</string>
+    <string name="tagline">Your Cozy Corner for Coffee</string>
+    
+    <!-- Auth Strings -->
+    <string name="login_title">Selamat Datang Kembali</string>
+    <string name="login_subtitle">Silakan masuk ke akun Pondok Bukit Anda</string>
+    <string name="email_hint">Alamat Email</string>
+    <string name="password_hint">Kata Sandi</string>
+    <string name="btn_login">Masuk</string>
+    <string name="btn_register">Daftar Akun Baru</string>
+</resources>

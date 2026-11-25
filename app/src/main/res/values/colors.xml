@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Colors (Pondok Bukit Coffee) -->
+    <color name="brand_cream_bg">#F7EFE5</color>        <!-- Background utama aplikasi -->
+    <color name="brand_surface">#FFFFFF</color>         <!-- Card, Dialog & Input field background -->
+    <color name="brand_terracotta">#C4683C</color>      <!-- Primary Accent: Button, highlight -->
+    <color name="brand_terracotta_dark">#A7542C</color> <!-- Button pressed state -->
+    <color name="brand_espresso">#3E2723</color>        <!-- Judul, Teks Utama -->
+    <color name="brand_roast">#6D4C41</color>           <!-- Subtitle, Deskripsi -->
+    <color name="brand_border">#EADCCE</color>          <!-- Border & Divider -->
+    
+    <!-- Neutral & Status Colors -->
+    <color name="text_hint">#A1887F</color>
+    <color name="status_diproses">#D9822B</color>       <!-- Amber -->
+    <color name="status_siap">#4E7C59</color>           <!-- Sage Green -->
+    <color name="status_selesai">#8D99AE</color>        <!-- Muted Slate -->
+    <color name="status_batal">#D00000</color>          <!-- Crimson -->
+
+    <!-- Base Android colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
