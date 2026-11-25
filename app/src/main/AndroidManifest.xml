@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PondokBukitCoffee">
 
+        <!-- Welcome Screen (Launcher) -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -25,7 +26,18 @@
             </intent-filter>
         </activity>
 
-        <!-- Activities for Menu Feature (Orang 2) -->
+        <!-- Auth Screens (Tugas Orang 1) -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Menu Catalog Screens (Tugas Orang 2) -->
         <activity
             android:name=".MenuListActivity"
             android:exported="false"
@@ -33,6 +45,23 @@
 
         <activity
             android:name=".DetailMenuActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Order Workflow Screens (Tugas Orang 1) -->
+        <activity
+            android:name=".CartActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".CheckoutActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Admin Workflow Screen (Tugas Orang 3) -->
+        <activity
+            android:name=".AdminOrderListActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
