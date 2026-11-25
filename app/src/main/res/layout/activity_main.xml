@@ -49,35 +49,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvWelcomeTitle" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/btn_primary"
+        android:layout_height="54dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/btn_login"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:backgroundTint="@null"
+        app:backgroundTint="@color/brand_terracotta"
+        app:cornerRadius="14dp"
         app:layout_constraintBottom_toTopOf="@+id/btnRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvWelcomeSubtitle" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRegister"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="54dp"
         android:layout_marginTop="12dp"
-        android:background="@drawable/bg_input_field"
         android:fontFamily="sans-serif-medium"
         android:text="@string/btn_register"
         android:textAllCaps="false"
         android:textColor="@color/brand_terracotta"
         android:textSize="16sp"
-        app:backgroundTint="@null"
+        app:cornerRadius="14dp"
+        app:strokeColor="@color/brand_terracotta"
+        app:strokeWidth="1.5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
