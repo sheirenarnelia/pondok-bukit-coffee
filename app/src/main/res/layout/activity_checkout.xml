@@ -196,7 +196,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:hint="Special Notes for Barista (Optional)"
+                        android:hint="Additional Notes (Optional)"
                         app:boxBackgroundColor="@color/brand_surface"
                         app:boxCornerRadiusBottomEnd="12dp"
                         app:boxCornerRadiusBottomStart="12dp"
@@ -265,15 +265,8 @@
                         android:padding="12dp">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="💵 "
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:text="Please proceed to the cashier counter to complete your cash payment."
                             android:textColor="@color/brand_espresso"
                             android:textSize="13sp" />

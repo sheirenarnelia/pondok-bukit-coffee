@@ -32,13 +32,13 @@ public class AdminOrderListActivity extends AppCompatActivity {
 
         // Sample Status Update Actions (Tugas Orang 3 nanti menghubungkan ke Firestore)
         btnMarkReady1.setOnClickListener(v -> {
-            btnMarkReady1.setText("Order is Ready ✓");
+            btnMarkReady1.setText("Order is Ready");
             btnMarkReady1.setEnabled(false);
             Toast.makeText(this, "Order #ORD-101 marked as READY", Toast.LENGTH_SHORT).show();
         });
 
         btnMarkComplete2.setOnClickListener(v -> {
-            btnMarkComplete2.setText("Order Completed ✓");
+            btnMarkComplete2.setText("Order Completed");
             btnMarkComplete2.setEnabled(false);
             Toast.makeText(this, "Order #ORD-100 marked as COMPLETED", Toast.LENGTH_SHORT).show();
         });

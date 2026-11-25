@@ -161,7 +161,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         // Show Success Confirmation Dialog
         new AlertDialog.Builder(this)
-                .setTitle("Order Placed Successfully! ☕")
+                .setTitle("Order Placed Successfully")
                 .setMessage(details.toString())
                 .setPositiveButton("Back to Home", (dialog, which) -> {
                     // Clear the cart
