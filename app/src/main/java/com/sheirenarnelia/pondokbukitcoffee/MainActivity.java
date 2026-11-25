@@ -1,30 +1,23 @@
 package com.sheirenarnelia.pondokbukitcoffee;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
-    private ViewPager2 vpHeroSlider;
-    private LinearLayout llDotsIndicator;
     private MaterialButton btnLogin, btnRegister;
-
-    private final Handler sliderHandler = new Handler(Looper.getMainLooper());
-    private Runnable sliderRunnable;
-    private List<HeroSlide> slides;
+    private TextView tvHeroTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +25,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initialize Views
-        vpHeroSlider = findViewById(R.id.vpHeroSlider);
-        llDotsIndicator = findViewById(R.id.llDotsIndicator);
+        tvHeroTitle = findViewById(R.id.tvHeroTitle);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
 
-        // Setup Pondok Bukit Real Photos Slider
-        setupHeroSlider();
+        // Apply Two-Tone Luxury Headline ("Your Cozy Corner" in Espresso, "for Coffee Moments" in Terracotta)
+        styleHeadlineText();
 
         // Navigate to Login Screen via Intent
         btnLogin.setOnClickListener(v -> {
@@ -53,110 +45,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setupHeroSlider() {
-        slides = new ArrayList<>();
-        slides.add(new HeroSlide(
-                R.drawable.img_pondok_garden,
-                "LUSH GARDEN & SAUNG",
-                "Tranquil Hillside Saung",
-                "Sip handcrafted coffee in traditional gazebos surrounded by cooling mountain breeze."
-        ));
-        slides.add(new HeroSlide(
-                R.drawable.img_pondok_deck,
-                "EVENING AMBIANCE",
-                "Warm Glowing Lights",
-                "Magical evenings under fairy lights, made for relaxing coffee chats and cozy moments."
-        ));
-        slides.add(new HeroSlide(
-                R.drawable.img_pondok_outdoor,
-                "PANORAMIC TERRACE",
-                "Scenic Deck Seating",
-                "Open-air wooden terrace overlooking panoramic valley and lush mountain scenery."
-        ));
-        slides.add(new HeroSlide(
-                R.drawable.img_pondok_view,
-                "MOUNTAIN ESCAPE",
-                "Pure Nature Retreat",
-                "Your peaceful hilltop haven to unwind, savor fresh brews, and breathe easy."
-        ));
+    private void styleHeadlineText() {
+        String line1 = "Your Cozy Corner\n";
+        String line2 = "for Coffee Moments";
+        String fullText = line1 + line2;
 
-        HeroSliderAdapter adapter = new HeroSliderAdapter(slides);
-        vpHeroSlider.setAdapter(adapter);
+        SpannableStringBuilder ssb = new SpannableStringBuilder(fullText);
 
-        setupDotsIndicator(slides.size());
-        setCurrentDot(0);
+        int espressoColor = ContextCompat.getColor(this, R.color.brand_espresso);
+        int terracottaColor = ContextCompat.getColor(this, R.color.brand_terracotta);
 
-        vpHeroSlider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                setCurrentDot(position);
-                // Reset timer when user swipes manually
-                sliderHandler.removeCallbacks(sliderRunnable);
-                sliderHandler.postDelayed(sliderRunnable, 4000);
-            }
-        });
-
-        // Auto-scroll every 4 seconds
-        sliderRunnable = new Runnable() {
-            @Override
-            public void run() {
-                int nextIndex = (vpHeroSlider.getCurrentItem() + 1) % slides.size();
-                vpHeroSlider.setCurrentItem(nextIndex, true);
-                sliderHandler.postDelayed(this, 4000);
-            }
-        };
-    }
-
-    private void setupDotsIndicator(int count) {
-        llDotsIndicator.removeAllViews();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+        // Line 1: Deep Espresso
+        ssb.setSpan(
+                new ForegroundColorSpan(espressoColor),
+                0,
+                line1.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         );
-        params.setMargins(6, 0, 6, 0);
 
-        for (int i = 0; i < count; i++) {
-            ImageView dot = new ImageView(this);
-            dot.setImageDrawable(getDrawable(R.drawable.dot_inactive));
-            dot.setLayoutParams(params);
-            llDotsIndicator.addView(dot);
-        }
-    }
+        // Line 2: Warm Terracotta Accent
+        ssb.setSpan(
+                new ForegroundColorSpan(terracottaColor),
+                line1.length(),
+                fullText.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
 
-    private void setCurrentDot(int index) {
-        int childCount = llDotsIndicator.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            ImageView dot = (ImageView) llDotsIndicator.getChildAt(i);
-            if (i == index) {
-                dot.setImageDrawable(getDrawable(R.drawable.dot_active));
-            } else {
-                dot.setImageDrawable(getDrawable(R.drawable.dot_inactive));
-            }
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (sliderRunnable != null) {
-            sliderHandler.postDelayed(sliderRunnable, 4000);
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (sliderRunnable != null) {
-            sliderHandler.removeCallbacks(sliderRunnable);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (sliderRunnable != null) {
-            sliderHandler.removeCallbacks(sliderRunnable);
-        }
+        tvHeroTitle.setText(ssb);
     }
 }

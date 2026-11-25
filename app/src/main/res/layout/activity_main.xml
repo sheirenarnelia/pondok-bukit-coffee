@@ -6,154 +6,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/brand_cream_bg"
+    android:paddingHorizontal="28dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="24dp"
     tools:context=".MainActivity">
 
-    <!-- Top Hero Section with Carousel (52% height) -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardHeroContainer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:cardBackgroundColor="@color/brand_espresso"
-        app:cardCornerRadius="32dp"
-        app:cardElevation="2dp"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.PondokBukit.BottomRounded"
-        app:strokeWidth="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/clBottomInfo"
+    <!-- Top Luxury Kicker Badge -->
+    <TextView
+        android:id="@+id/tvWelcomeBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_chip_terracotta"
+        android:fontFamily="@font/plus_jakarta_sans_semibold"
+        android:letterSpacing="0.14"
+        android:text="ARTISANAL COFFEE HOUSE"
+        android:textColor="@color/brand_terracotta"
+        android:textSize="11sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="52">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <!-- ViewPager2 for Real Pondok Bukit Photos -->
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vpHeroSlider"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Elegant Centered Brand Badge Header -->
-            <LinearLayout
-                android:id="@+id/llBrandBadge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="46dp"
-                android:background="@drawable/bg_input_field"
-                android:backgroundTint="#85150F0D"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="7dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/logo_pondokbukit" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="9dp"
-                    android:fontFamily="@font/plus_jakarta_sans_semibold"
-                    android:letterSpacing="0.12"
-                    android:text="PONDOK BUKIT"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <!-- Dots Indicator Container (Centered at Bottom) -->
-            <LinearLayout
-                android:id="@+id/llDotsIndicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Bottom Content Section (48% height) -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clBottomInfo"
+    <!-- Center Content Block (Logo + Headlines + Subtitle + Chips) -->
+    <LinearLayout
+        android:id="@+id/llCenterContent"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingHorizontal="26dp"
-        android:paddingVertical="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/llButtonContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardHeroContainer"
-        app:layout_constraintVertical_weight="48">
+        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeBadge">
 
-        <!-- Top Kicker Tag -->
+        <!-- High-Definition Seamless Logo -->
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo_pondokbukit" />
+
+        <!-- Luxury Editorial Tagline Title (Centered) -->
         <TextView
-            android:id="@+id/tvKicker"
+            android:id="@+id/tvHeroTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/plus_jakarta_sans_semibold"
-            android:letterSpacing="0.14"
-            android:text="ARTISANAL COFFEE HOUSE"
-            android:textColor="@color/brand_terracotta"
-            android:textSize="11sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!-- Luxury Editorial Headline in Playfair Display -->
-        <TextView
-            android:id="@+id/tvMainTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/playfair_display_bold"
+            android:gravity="center"
             android:letterSpacing="0.01"
-            android:lineSpacingExtra="3dp"
-            android:text="Your Cozy Corner\nfor Fresh Coffee"
+            android:lineSpacingExtra="4dp"
+            android:text="Your Cozy Corner\nfor Coffee Moments"
             android:textColor="@color/brand_espresso"
-            android:textSize="27sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvKicker" />
+            android:textSize="30sp" />
 
-        <!-- Subtitle in Plus Jakarta Sans -->
+        <!-- Refined Warm Subtitle (Centered) -->
         <TextView
-            android:id="@+id/tvMainSubtitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:fontFamily="@font/plus_jakarta_sans_medium"
-            android:lineSpacingExtra="2dp"
-            android:text="Fresh mountain air, serene hillside gazebos, and handcrafted brews made for peaceful moments."
-            android:textColor="@color/brand_roast"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMainTitle" />
-
-        <!-- Aesthetic Highlight Badges -->
-        <LinearLayout
-            android:id="@+id/llFeatureChips"
+            android:id="@+id/tvHeroSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMainSubtitle">
+            android:layout_marginHorizontal="6dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:gravity="center"
+            android:lineSpacingExtra="3dp"
+            android:text="Fresh mountain air, peaceful hillside vibes, and handcrafted brews made for your perfect pause."
+            android:textColor="@color/brand_roast"
+            android:textSize="13.5sp" />
+
+        <!-- Aesthetic Highlight Pills (Centered) -->
+        <LinearLayout
+            android:id="@+id/llFeatureChips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -188,50 +118,51 @@
                 android:textSize="11sp" />
         </LinearLayout>
 
-        <!-- Action Buttons Container (Placed naturally with balanced spacing) -->
-        <LinearLayout
-            android:id="@+id/llButtons"
+    </LinearLayout>
+
+    <!-- Bottom Buttons Container -->
+    <LinearLayout
+        android:id="@+id/llButtonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Primary Sign In Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_height="56dp"
+            android:elevation="2dp"
+            android:fontFamily="@font/plus_jakarta_sans_semibold"
+            android:letterSpacing="0.04"
+            android:text="@string/btn_login"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:backgroundTint="@color/brand_terracotta"
+            app:cornerRadius="18dp" />
 
-            <!-- Primary Sign In Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:elevation="2dp"
-                android:fontFamily="@font/plus_jakarta_sans_semibold"
-                android:letterSpacing="0.04"
-                android:text="@string/btn_login"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="15.5sp"
-                app:backgroundTint="@color/brand_terracotta"
-                app:cornerRadius="16dp" />
-
-            <!-- Outlined Create Account Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRegister"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/brand_surface"
-                android:fontFamily="@font/plus_jakarta_sans_semibold"
-                android:letterSpacing="0.04"
-                android:text="@string/btn_register"
-                android:textAllCaps="false"
-                android:textColor="@color/brand_espresso"
-                android:textSize="15.5sp"
-                app:cornerRadius="16dp"
-                app:strokeColor="@color/brand_border"
-                app:strokeWidth="1.5dp" />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Secondary Create Account Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegister"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/brand_surface"
+            android:fontFamily="@font/plus_jakarta_sans_semibold"
+            android:letterSpacing="0.04"
+            android:text="@string/btn_register"
+            android:textAllCaps="false"
+            android:textColor="@color/brand_espresso"
+            android:textSize="16sp"
+            app:cornerRadius="18dp"
+            app:strokeColor="@color/brand_border"
+            app:strokeWidth="1.5dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
