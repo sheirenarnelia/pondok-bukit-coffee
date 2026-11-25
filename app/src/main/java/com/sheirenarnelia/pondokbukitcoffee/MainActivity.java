@@ -1,5 +1,6 @@
 package com.sheirenarnelia.pondokbukitcoffee;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -19,6 +20,17 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        // Intent to MenuListActivity for testing & previewing the catalog
+        findViewById(R.id.btnLogin).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, MenuListActivity.class);
+            startActivity(intent);
+        });
+
+        findViewById(R.id.btnRegister).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, MenuListActivity.class);
+            startActivity(intent);
         });
     }
 }

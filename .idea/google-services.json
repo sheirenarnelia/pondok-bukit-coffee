@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "913580569685",
+    "project_id": "pondokbukitcoffee",
+    "storage_bucket": "pondokbukitcoffee.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913580569685:android:b80f7c4da6e6f6953f50dc",
+        "android_client_info": {
+          "package_name": "com.sheirenarnelia.pondokbukitcoffee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCZV2XegwF3CP0O02Y5sSffHz8E-DFm_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
