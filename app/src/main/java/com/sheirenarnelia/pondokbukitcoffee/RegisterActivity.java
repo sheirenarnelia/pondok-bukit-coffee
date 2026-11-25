@@ -2,7 +2,10 @@ package com.sheirenarnelia.pondokbukitcoffee;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,9 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private TextInputLayout tilFullName, tilRegisterEmail, tilRegisterPassword, tilConfirmPassword;
     private TextInputEditText etFullName, etRegisterEmail, etRegisterPassword, etConfirmPassword;
     private MaterialButton btnRegisterSubmit;
     private TextView tvGoToLogin;
@@ -23,12 +28,21 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         // Initialize Views
+        tilFullName = findViewById(R.id.tilFullName);
+        tilRegisterEmail = findViewById(R.id.tilRegisterEmail);
+        tilRegisterPassword = findViewById(R.id.tilRegisterPassword);
+        tilConfirmPassword = findViewById(R.id.tilConfirmPassword);
+
         etFullName = findViewById(R.id.etFullName);
         etRegisterEmail = findViewById(R.id.etRegisterEmail);
         etRegisterPassword = findViewById(R.id.etRegisterPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
+
         btnRegisterSubmit = findViewById(R.id.btnRegisterSubmit);
         tvGoToLogin = findViewById(R.id.tvGoToLogin);
+
+        // Auto-clear error when user types
+        setupErrorClearing();
 
         // Submit Registration Action
         btnRegisterSubmit.setOnClickListener(v -> handleRegister());
@@ -41,46 +55,99 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    private void setupErrorClearing() {
+        etFullName.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilFullName.setError(null);
+            }
+        });
+
+        etRegisterEmail.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilRegisterEmail.setError(null);
+            }
+        });
+
+        etRegisterPassword.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilRegisterPassword.setError(null);
+            }
+        });
+
+        etConfirmPassword.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilConfirmPassword.setError(null);
+            }
+        });
+    }
+
     private void handleRegister() {
+        tilFullName.setError(null);
+        tilRegisterEmail.setError(null);
+        tilRegisterPassword.setError(null);
+        tilConfirmPassword.setError(null);
+
         String fullName = etFullName.getText() != null ? etFullName.getText().toString().trim() : "";
         String email = etRegisterEmail.getText() != null ? etRegisterEmail.getText().toString().trim() : "";
         String password = etRegisterPassword.getText() != null ? etRegisterPassword.getText().toString().trim() : "";
         String confirmPassword = etConfirmPassword.getText() != null ? etConfirmPassword.getText().toString().trim() : "";
 
-        // Form Validation
+        boolean isValid = true;
+
+        // Full Name Validation
         if (TextUtils.isEmpty(fullName)) {
-            etFullName.setError("Full name is required");
-            etFullName.requestFocus();
-            return;
+            tilFullName.setError("Full name is required");
+            isValid = false;
+        } else if (fullName.length() < 3) {
+            tilFullName.setError("Full name must be at least 3 characters");
+            isValid = false;
         }
 
+        // Email Validation
         if (TextUtils.isEmpty(email)) {
-            etRegisterEmail.setError("Email address is required");
-            etRegisterEmail.requestFocus();
-            return;
+            tilRegisterEmail.setError("Email address is required");
+            isValid = false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            tilRegisterEmail.setError("Please enter a valid email address");
+            isValid = false;
         }
 
+        // Password Validation
         if (TextUtils.isEmpty(password)) {
-            etRegisterPassword.setError("Password is required");
-            etRegisterPassword.requestFocus();
-            return;
+            tilRegisterPassword.setError("Password is required");
+            isValid = false;
+        } else if (password.length() < 6) {
+            tilRegisterPassword.setError("Password must be at least 6 characters");
+            isValid = false;
         }
 
-        if (password.length() < 6) {
-            etRegisterPassword.setError("Password must be at least 6 characters");
-            etRegisterPassword.requestFocus();
-            return;
+        // Confirm Password Validation
+        if (TextUtils.isEmpty(confirmPassword)) {
+            tilConfirmPassword.setError("Please confirm your password");
+            isValid = false;
+        } else if (!password.equals(confirmPassword)) {
+            tilConfirmPassword.setError("Passwords do not match");
+            isValid = false;
         }
 
-        if (!password.equals(confirmPassword)) {
-            etConfirmPassword.setError("Passwords do not match");
-            etConfirmPassword.requestFocus();
+        if (!isValid) {
             return;
         }
 
         // Temporary registration feedback before Firebase is integrated
         Toast.makeText(this, "Registration successful for: " + fullName, Toast.LENGTH_SHORT).show();
 
-        // Note: In Day 2, FirebaseAuth createUserWithEmailAndPassword will be placed here.
+        // Note: In Day 2, FirebaseAuth.createUserWithEmailAndPassword & Firestore user doc will be placed here.
+    }
+
+    private abstract static class SimpleTextWatcher implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        @Override
+        public void afterTextChanged(Editable s) {}
     }
 }

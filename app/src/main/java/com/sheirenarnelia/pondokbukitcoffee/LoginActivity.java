@@ -2,7 +2,10 @@ package com.sheirenarnelia.pondokbukitcoffee;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,9 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private TextInputLayout tilEmail, tilPassword;
     private TextInputEditText etEmail, etPassword;
     private MaterialButton btnLoginSubmit;
     private TextView tvGoToRegister;
@@ -23,10 +28,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Initialize Views
+        tilEmail = findViewById(R.id.tilEmail);
+        tilPassword = findViewById(R.id.tilPassword);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLoginSubmit = findViewById(R.id.btnLoginSubmit);
         tvGoToRegister = findViewById(R.id.tvGoToRegister);
+
+        // Auto-clear error when user types
+        setupErrorClearing();
 
         // Submit Login Action
         btnLoginSubmit.setOnClickListener(v -> handleLogin());
@@ -38,26 +48,64 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void setupErrorClearing() {
+        etEmail.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilEmail.setError(null);
+            }
+        });
+
+        etPassword.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilPassword.setError(null);
+            }
+        });
+    }
+
     private void handleLogin() {
+        tilEmail.setError(null);
+        tilPassword.setError(null);
+
         String email = etEmail.getText() != null ? etEmail.getText().toString().trim() : "";
         String password = etPassword.getText() != null ? etPassword.getText().toString().trim() : "";
 
-        // Form Validation
+        boolean isValid = true;
+
+        // Email Validation
         if (TextUtils.isEmpty(email)) {
-            etEmail.setError("Email address is required");
-            etEmail.requestFocus();
-            return;
+            tilEmail.setError("Email address is required");
+            isValid = false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            tilEmail.setError("Please enter a valid email address (e.g. name@domain.com)");
+            isValid = false;
         }
 
+        // Password Validation
         if (TextUtils.isEmpty(password)) {
-            etPassword.setError("Password is required");
-            etPassword.requestFocus();
+            tilPassword.setError("Password is required");
+            isValid = false;
+        } else if (password.length() < 6) {
+            tilPassword.setError("Password must be at least 6 characters");
+            isValid = false;
+        }
+
+        if (!isValid) {
             return;
         }
 
         // Temporary auth feedback before Firebase is integrated
-        Toast.makeText(this, "Signing in as: " + email, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Logging in as: " + email, Toast.LENGTH_SHORT).show();
         
-        // Note: In Day 2, FirebaseAuth signInWithEmailAndPassword & Firestore role checking will be placed here.
+        // Note: In Day 2, FirebaseAuth.signInWithEmailAndPassword & role routing will be placed here.
+    }
+
+    // Helper text watcher
+    private abstract static class SimpleTextWatcher implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        @Override
+        public void afterTextChanged(Editable s) {}
     }
 }
