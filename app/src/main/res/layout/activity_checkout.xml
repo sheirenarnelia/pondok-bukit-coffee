@@ -84,7 +84,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <!-- RadioGroup for Dine-in vs Takeaway -->
+                    <!-- RadioGroup: Dine-in vs Takeaway -->
                     <RadioGroup
                         android:id="@+id/rgOrderType"
                         android:layout_width="match_parent"
@@ -116,13 +116,13 @@
                             android:textSize="15sp" />
                     </RadioGroup>
 
-                    <!-- Dynamic Input: Table Number (for Dine-in) -->
+                    <!-- Customer Name Field (Used for both Dine-in & Pickup) -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilTableNumber"
+                        android:id="@+id/tilCustomerName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="Table Number"
+                        android:hint="Order Name (For Calling Order)"
                         app:boxBackgroundColor="@color/brand_surface"
                         app:boxCornerRadiusBottomEnd="12dp"
                         app:boxCornerRadiusBottomStart="12dp"
@@ -132,36 +132,11 @@
                         app:hintTextColor="@color/brand_terracotta">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etTableNumber"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:text="Table 05"
-                            android:textColor="@color/brand_espresso"
-                            android:textSize="15sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <!-- Dynamic Input: Pickup Name (for Takeaway) -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilPickupName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:hint="Pickup Name / Phone"
-                        android:visibility="gone"
-                        app:boxBackgroundColor="@color/brand_surface"
-                        app:boxCornerRadiusBottomEnd="12dp"
-                        app:boxCornerRadiusBottomStart="12dp"
-                        app:boxCornerRadiusTopEnd="12dp"
-                        app:boxCornerRadiusTopStart="12dp"
-                        app:boxStrokeColor="@color/brand_terracotta"
-                        app:hintTextColor="@color/brand_terracotta">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etPickupName"
+                            android:id="@+id/etCustomerName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPersonName"
+                            android:text="Sheiren"
                             android:textColor="@color/brand_espresso"
                             android:textSize="15sp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -169,7 +144,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Section 2: Preferences (Checkbox - Syarat Dosen #2d) -->
+            <!-- Section 2: Takeaway Preferences & Notes -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -190,33 +165,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:text="2. Serving Preferences"
+                        android:text="2. Order Preferences &amp; Notes"
                         android:textColor="@color/brand_espresso"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <CheckBox
-                        android:id="@+id/cbStraw"
+                    <!-- Takeaway Only Checkbox: Cutlery & Bag (Syarat Dosen #2d) -->
+                    <LinearLayout
+                        android:id="@+id/llTakeawayPreferences"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:buttonTint="@color/brand_terracotta"
-                        android:checked="true"
-                        android:text="Include eco-friendly paper straw &amp; napkins"
-                        android:textColor="@color/brand_espresso"
-                        android:textSize="14sp" />
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-                    <CheckBox
-                        android:id="@+id/cbSeparateIce"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:buttonTint="@color/brand_terracotta"
-                        android:text="Separate ice in a separate cup"
-                        android:textColor="@color/brand_espresso"
-                        android:textSize="14sp" />
+                        <CheckBox
+                            android:id="@+id/cbCutlery"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/brand_terracotta"
+                            android:checked="true"
+                            android:text="Need disposable cutlery &amp; paper carry bag"
+                            android:textColor="@color/brand_espresso"
+                            android:textSize="14sp" />
+                    </LinearLayout>
 
-                    <!-- Special Notes Text Input -->
+                    <!-- Special Notes Text Input (Syarat Dosen #2a) -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilOrderNotes"
                         android:layout_width="match_parent"
@@ -270,6 +244,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
+                    <!-- Spinner with 2 Options: Cash vs QRIS -->
                     <Spinner
                         android:id="@+id/spPaymentMethod"
                         android:layout_width="match_parent"
@@ -278,10 +253,99 @@
                         android:background="@drawable/bg_input_field"
                         android:paddingHorizontal="12dp" />
 
+                    <!-- Cash Message View -->
+                    <LinearLayout
+                        android:id="@+id/llCashView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_input_field"
+                        android:backgroundTint="#F2EAE1"
+                        android:orientation="horizontal"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="💵 "
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Please proceed to the cashier counter to complete your cash payment."
+                            android:textColor="@color/brand_espresso"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <!-- QRIS & Bank Transfer Display View -->
+                    <LinearLayout
+                        android:id="@+id/llQrisView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_input_field"
+                        android:backgroundTint="#FAF6F0"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Scan QRIS to Pay"
+                            android:textColor="@color/brand_espresso"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="BCA Mobile, GoPay, OVO, Dana, ShopeePay"
+                            android:textColor="@color/brand_roast"
+                            android:textSize="12sp" />
+
+                        <!-- QR Code Image -->
+                        <ImageView
+                            android:id="@+id/ivQrisCode"
+                            android:layout_width="160dp"
+                            android:layout_height="160dp"
+                            android:layout_marginVertical="12dp"
+                            android:contentDescription="QRIS Code"
+                            android:src="@drawable/img_qris_sample" />
+
+                        <!-- Bank Transfer Alternative -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Or Manual Bank Transfer:"
+                            android:textColor="@color/brand_roast"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvBankInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:background="@drawable/bg_circle_btn"
+                            android:fontFamily="sans-serif-medium"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="4dp"
+                            android:text="BCA: 5420-189-221 a/n Pondok Bukit"
+                            android:textColor="@color/brand_espresso"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Section 4: Order Breakdown -->
+            <!-- Section 4: Payment Summary -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

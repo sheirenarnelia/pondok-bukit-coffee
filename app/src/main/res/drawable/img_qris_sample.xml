@@ -1,0 +1,56 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- QR Background -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M0,0h200v200h-200z" />
+
+    <!-- Top-Left Finder Pattern -->
+    <path
+        android:fillColor="#3E2723"
+        android:pathData="M20,20h50v50h-50z M30,30h30v30h-30z M40,40h10v10h-10z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,30h30v30h-30z" />
+    <path
+        android:fillColor="#3E2723"
+        android:pathData="M37,37h16v16h-16z" />
+
+    <!-- Top-Right Finder Pattern -->
+    <path
+        android:fillColor="#3E2723"
+        android:pathData="M130,20h50v50h-50z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M140,30h30v30h-30z" />
+    <path
+        android:fillColor="#3E2723"
+        android:pathData="M147,37h16v16h-16z" />
+
+    <!-- Bottom-Left Finder Pattern -->
+    <path
+        android:fillColor="#3E2723"
+        android:pathData="M20,130h50v50h-50z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,140h30v30h-30z" />
+    <path
+        android:fillColor="#3E2723"
+        android:pathData="M37,147h16v16h-16z" />
+
+    <!-- Stylized Data Modules in Brand Espresso -->
+    <path
+        android:fillColor="#3E2723"
+        android:pathData="M80,20h10v10h-10z M100,20h10v20h-10z M80,40h10v20h-10z M100,50h20v10h-20z M30,80h20v10h-20z M60,80h10v10h-10z M80,70h10v20h-10z M100,70h30v10h-30z M140,80h10v10h-10z M160,80h20v10h-20z M20,100h20v10h-20z M50,100h10v20h-10z M70,100h20v10h-20z M100,90h10v20h-10z M120,100h20v10h-20z M150,100h30v10h-30z M30,110h10v10h-10z M80,120h30v10h-30z M120,120h10v20h-10z M140,110h20v20h-20z M170,120h10v20h-10z M80,140h20v10h-20z M110,140h20v20h-20z M140,140h10v20h-10z M160,150h20v20h-20z M80,160h10v20h-10z M100,170h30v10h-30z M140,170h10v10h-10z M170,180h10v10h-10z M90,90h20v20h-20z" />
+
+    <!-- Center Coffee Icon Badge -->
+    <path
+        android:fillColor="#C4683C"
+        android:pathData="M85,85h30v30h-30z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M92,94h12v7c0,3 -2,4 -6,4s-6,-1 -6,-4v-7z M104,96h3c1,0 2,1 2,2c0,1 -1,2 -2,2h-3v-4z M90,107h16v2h-16z" />
+</vector>
