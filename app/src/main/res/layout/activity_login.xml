@@ -135,6 +135,18 @@
                     app:backgroundTint="@color/brand_terracotta"
                     app:cornerRadius="14dp" />
 
+                <!-- Helper Banner: 2 Roles Hint -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_input_field"
+                    android:backgroundTint="#F0E8DD"
+                    android:padding="12dp"
+                    android:text="💡 2 Roles Available:\n• Admin: admin@pondokbukit.com\n• Customer: customer@pondokbukit.com\n(Password: min 6 chars, e.g. 123456)"
+                    android:textColor="@color/brand_roast"
+                    android:textSize="12sp" />
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

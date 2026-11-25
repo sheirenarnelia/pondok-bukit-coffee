@@ -95,10 +95,16 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Feedback & navigate to Cart/Menu
-        Toast.makeText(this, "Signed in successfully as: " + email, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(LoginActivity.this, CartActivity.class);
-        startActivity(intent);
+        // Role Routing Logic (1 App 2 Roles)
+        if (email.equalsIgnoreCase("admin@pondokbukit.com") || email.toLowerCase().contains("admin")) {
+            Toast.makeText(this, "Welcome, Admin! Redirecting to Barista Dashboard...", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginActivity.this, AdminOrderListActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Signed in successfully as: " + email, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginActivity.this, CartActivity.class);
+            startActivity(intent);
+        }
         finish();
     }
 
