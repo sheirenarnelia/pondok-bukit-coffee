@@ -22,7 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // Inisialisasi View
+        // Initialize Views
         etFullName = findViewById(R.id.etFullName);
         etRegisterEmail = findViewById(R.id.etRegisterEmail);
         etRegisterPassword = findViewById(R.id.etRegisterPassword);
@@ -30,10 +30,10 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegisterSubmit = findViewById(R.id.btnRegisterSubmit);
         tvGoToLogin = findViewById(R.id.tvGoToLogin);
 
-        // Aksi Tombol Daftar
+        // Submit Registration Action
         btnRegisterSubmit.setOnClickListener(v -> handleRegister());
 
-        // Navigasi Kembali ke Login
+        // Navigate back to Login Screen
         tvGoToLogin.setOnClickListener(v -> {
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -47,40 +47,40 @@ public class RegisterActivity extends AppCompatActivity {
         String password = etRegisterPassword.getText() != null ? etRegisterPassword.getText().toString().trim() : "";
         String confirmPassword = etConfirmPassword.getText() != null ? etConfirmPassword.getText().toString().trim() : "";
 
-        // Validasi Form
+        // Form Validation
         if (TextUtils.isEmpty(fullName)) {
-            etFullName.setError("Nama lengkap wajib diisi");
+            etFullName.setError("Full name is required");
             etFullName.requestFocus();
             return;
         }
 
         if (TextUtils.isEmpty(email)) {
-            etRegisterEmail.setError("Email wajib diisi");
+            etRegisterEmail.setError("Email address is required");
             etRegisterEmail.requestFocus();
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            etRegisterPassword.setError("Password wajib diisi");
+            etRegisterPassword.setError("Password is required");
             etRegisterPassword.requestFocus();
             return;
         }
 
         if (password.length() < 6) {
-            etRegisterPassword.setError("Password minimal 6 karakter");
+            etRegisterPassword.setError("Password must be at least 6 characters");
             etRegisterPassword.requestFocus();
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            etConfirmPassword.setError("Konfirmasi password tidak cocok");
+            etConfirmPassword.setError("Passwords do not match");
             etConfirmPassword.requestFocus();
             return;
         }
 
-        // Dummy registration logic sebelum Firebase dihubungkan Orang 2
-        Toast.makeText(this, "Registrasi berhasil untuk: " + fullName, Toast.LENGTH_SHORT).show();
+        // Temporary registration feedback before Firebase is integrated
+        Toast.makeText(this, "Registration successful for: " + fullName, Toast.LENGTH_SHORT).show();
 
-        // Setelah Firebase aktif di Hari 2, FirebaseAuth.createUserWithEmailAndPassword dipasang di sini.
+        // Note: In Day 2, FirebaseAuth createUserWithEmailAndPassword will be placed here.
     }
 }

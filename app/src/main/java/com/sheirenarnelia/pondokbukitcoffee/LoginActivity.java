@@ -22,16 +22,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Inisialisasi View
+        // Initialize Views
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLoginSubmit = findViewById(R.id.btnLoginSubmit);
         tvGoToRegister = findViewById(R.id.tvGoToRegister);
 
-        // Aksi Tombol Masuk
+        // Submit Login Action
         btnLoginSubmit.setOnClickListener(v -> handleLogin());
 
-        // Navigasi ke Halaman Register
+        // Navigate to Register Screen
         tvGoToRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
@@ -42,22 +42,22 @@ public class LoginActivity extends AppCompatActivity {
         String email = etEmail.getText() != null ? etEmail.getText().toString().trim() : "";
         String password = etPassword.getText() != null ? etPassword.getText().toString().trim() : "";
 
-        // Validasi Form
+        // Form Validation
         if (TextUtils.isEmpty(email)) {
-            etEmail.setError("Email wajib diisi");
+            etEmail.setError("Email address is required");
             etEmail.requestFocus();
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            etPassword.setError("Password wajib diisi");
+            etPassword.setError("Password is required");
             etPassword.requestFocus();
             return;
         }
 
-        // Dummy auth logic sebelum Firebase dihubungkan Orang 2
-        Toast.makeText(this, "Mencoba masuk: " + email, Toast.LENGTH_SHORT).show();
+        // Temporary auth feedback before Firebase is integrated
+        Toast.makeText(this, "Signing in as: " + email, Toast.LENGTH_SHORT).show();
         
-        // Catatan: Setelah Firebase aktif di Hari 2, logika FirebaseAuth & Cek Role di Firestore akan dipasang di sini.
+        // Note: In Day 2, FirebaseAuth signInWithEmailAndPassword & Firestore role checking will be placed here.
     }
 }

@@ -16,17 +16,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Inisialisasi Tombol di Welcome Screen
+        // Initialize Welcome Screen Buttons
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
 
-        // Navigasi ke Halaman Login lewat Intent
+        // Navigate to Login Screen via Intent
         btnLogin.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         });
 
-        // Navigasi ke Halaman Register lewat Intent
+        // Navigate to Register Screen via Intent
         btnRegister.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);

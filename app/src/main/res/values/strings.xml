@@ -3,26 +3,26 @@
     <string name="tagline">Your Cozy Corner for Coffee</string>
     
     <!-- Welcome Screen -->
-    <string name="btn_login">Masuk</string>
-    <string name="btn_register">Daftar Akun Baru</string>
+    <string name="btn_login">Sign In</string>
+    <string name="btn_register">Create an Account</string>
 
     <!-- Login Screen -->
-    <string name="login_title">Selamat Datang!</string>
-    <string name="login_subtitle">Nikmati secangkir kopi favorit Anda hari ini</string>
-    <string name="email_label">Alamat Email</string>
-    <string name="email_hint">nama@email.com</string>
-    <string name="password_label">Kata Sandi</string>
-    <string name="password_hint">Masukkan kata sandi</string>
-    <string name="no_account_text">Belum punya akun? </string>
-    <string name="register_link">Daftar sekarang</string>
+    <string name="login_title">Welcome Back!</string>
+    <string name="login_subtitle">Enjoy your favorite cup of coffee today</string>
+    <string name="email_label">Email Address</string>
+    <string name="email_hint">name@email.com</string>
+    <string name="password_label">Password</string>
+    <string name="password_hint">Enter your password</string>
+    <string name="no_account_text">Don\'t have an account? </string>
+    <string name="register_link">Register here</string>
 
     <!-- Register Screen -->
-    <string name="register_title">Buat Akun Baru</string>
-    <string name="register_subtitle">Daftar untuk mulai memesan kopi di Pondok Bukit</string>
-    <string name="name_label">Nama Lengkap</string>
-    <string name="name_hint">Masukkan nama lengkap</string>
-    <string name="confirm_password_label">Konfirmasi Kata Sandi</string>
-    <string name="confirm_password_hint">Ulangi kata sandi Anda</string>
-    <string name="have_account_text">Sudah punya akun? </string>
-    <string name="login_link">Masuk di sini</string>
+    <string name="register_title">Create Account</string>
+    <string name="register_subtitle">Sign up to start ordering at Pondok Bukit</string>
+    <string name="name_label">Full Name</string>
+    <string name="name_hint">Enter your full name</string>
+    <string name="confirm_password_label">Confirm Password</string>
+    <string name="confirm_password_hint">Re-enter your password</string>
+    <string name="have_account_text">Already have an account? </string>
+    <string name="login_link">Sign in here</string>
 </resources>
