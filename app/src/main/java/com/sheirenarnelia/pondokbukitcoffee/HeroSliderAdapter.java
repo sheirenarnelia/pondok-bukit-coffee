@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,10 +13,10 @@ import java.util.List;
 
 public class HeroSliderAdapter extends RecyclerView.Adapter<HeroSliderAdapter.HeroViewHolder> {
 
-    private final List<Integer> imageResIds;
+    private final List<HeroSlide> slides;
 
-    public HeroSliderAdapter(List<Integer> imageResIds) {
-        this.imageResIds = imageResIds;
+    public HeroSliderAdapter(List<HeroSlide> slides) {
+        this.slides = slides;
     }
 
     @NonNull
@@ -27,21 +28,28 @@ public class HeroSliderAdapter extends RecyclerView.Adapter<HeroSliderAdapter.He
 
     @Override
     public void onBindViewHolder(@NonNull HeroViewHolder holder, int position) {
-        int resId = imageResIds.get(position);
-        holder.ivHeroImage.setImageResource(resId);
+        HeroSlide slide = slides.get(position);
+        holder.ivHeroImage.setImageResource(slide.getImageResId());
+        holder.tvSlideKicker.setText(slide.getKicker());
+        holder.tvSlideTitle.setText(slide.getTitle());
+        holder.tvSlideSubtitle.setText(slide.getSubtitle());
     }
 
     @Override
     public int getItemCount() {
-        return imageResIds != null ? imageResIds.size() : 0;
+        return slides != null ? slides.size() : 0;
     }
 
     static class HeroViewHolder extends RecyclerView.ViewHolder {
         ImageView ivHeroImage;
+        TextView tvSlideKicker, tvSlideTitle, tvSlideSubtitle;
 
         public HeroViewHolder(@NonNull View itemView) {
             super(itemView);
             ivHeroImage = itemView.findViewById(R.id.ivHeroImage);
+            tvSlideKicker = itemView.findViewById(R.id.tvSlideKicker);
+            tvSlideTitle = itemView.findViewById(R.id.tvSlideTitle);
+            tvSlideSubtitle = itemView.findViewById(R.id.tvSlideSubtitle);
         }
     }
 }

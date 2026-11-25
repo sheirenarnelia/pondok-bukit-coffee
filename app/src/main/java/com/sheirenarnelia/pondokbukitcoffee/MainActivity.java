@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final Handler sliderHandler = new Handler(Looper.getMainLooper());
     private Runnable sliderRunnable;
-    private List<Integer> photoResList;
+    private List<HeroSlide> slides;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         // Apply Two-Tone Luxury Headline
         styleHeadlineText();
 
-        // Setup Carousel with the 3 Scenery Photos
+        // Setup Fore Coffee-Style Hero Carousel with 3 Real Photos & Value Propositions
         setupHeroSlider();
 
         // Navigate to Login Screen via Intent
@@ -93,16 +93,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupHeroSlider() {
-        photoResList = new ArrayList<>();
-        // 3 Real Scenery Photos of Pondok Bukit
-        photoResList.add(R.drawable.img_pondok_garden);
-        photoResList.add(R.drawable.img_pondok_outdoor);
-        photoResList.add(R.drawable.img_pondok_view);
+        slides = new ArrayList<>();
+        slides.add(new HeroSlide(
+                R.drawable.img_pondok_outdoor,
+                "PANORAMIC TERRACE",
+                "Artisanal Brews, Hillside Views",
+                "Panoramic valley deck seating for your morning and evening coffee."
+        ));
+        slides.add(new HeroSlide(
+                R.drawable.img_pondok_garden,
+                "COZY NATURE RETREAT",
+                "Tranquil Saung & Garden",
+                "Private traditional gazebos surrounded by cooling mountain breeze."
+        ));
+        slides.add(new HeroSlide(
+                R.drawable.img_pondok_view,
+                "SEAMLESS ORDERING",
+                "Order Ahead, Skip the Wait",
+                "Dine-in at your favorite spot or quick pickup via QRIS & Cashier."
+        ));
 
-        HeroSliderAdapter adapter = new HeroSliderAdapter(photoResList);
+        HeroSliderAdapter adapter = new HeroSliderAdapter(slides);
         vpHeroSlider.setAdapter(adapter);
 
-        setupDotsIndicator(photoResList.size());
+        setupDotsIndicator(slides.size());
         setCurrentDot(0);
 
         vpHeroSlider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -119,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         sliderRunnable = new Runnable() {
             @Override
             public void run() {
-                int nextIndex = (vpHeroSlider.getCurrentItem() + 1) % photoResList.size();
+                int nextIndex = (vpHeroSlider.getCurrentItem() + 1) % slides.size();
                 vpHeroSlider.setCurrentItem(nextIndex, true);
                 sliderHandler.postDelayed(this, 4000);
             }

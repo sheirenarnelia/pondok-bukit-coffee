@@ -2,13 +2,13 @@ package com.sheirenarnelia.pondokbukitcoffee;
 
 public class HeroSlide {
     private final int imageResId;
-    private final String tag;
+    private final String kicker;
     private final String title;
     private final String subtitle;
 
-    public HeroSlide(int imageResId, String tag, String title, String subtitle) {
+    public HeroSlide(int imageResId, String kicker, String title, String subtitle) {
         this.imageResId = imageResId;
-        this.tag = tag;
+        this.kicker = kicker;
         this.title = title;
         this.subtitle = subtitle;
     }
@@ -17,8 +17,8 @@ public class HeroSlide {
         return imageResId;
     }
 
-    public String getTag() {
-        return tag;
+    public String getKicker() {
+        return kicker;
     }
 
     public String getTitle() {

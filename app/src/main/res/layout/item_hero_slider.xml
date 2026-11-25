@@ -4,31 +4,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Pure High-Definition Scenery Photo -->
+    <!-- High-Definition Scenery Photo -->
     <ImageView
         android:id="@+id/ivHeroImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="Pondok Bukit Scenery"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_pondok_garden"
+        android:src="@drawable/img_pondok_outdoor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Subtle Vignette Scrim at Top & Bottom for Brand & Dots Visibility -->
+    <!-- Top Subtle Dark Vignette for Status Bar / Brand Badge -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="110dp"
         android:background="@drawable/scrim_gradient"
         android:rotation="180"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Bottom Deep Cinematic Gradient for Slide Value-Prop -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="220dp"
         android:background="@drawable/scrim_gradient"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Fore Coffee-style Slide Value Proposition Overlay -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="52dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Category Pill Kicker -->
+        <TextView
+            android:id="@+id/tvSlideKicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input_field"
+            android:backgroundTint="#70150F0D"
+            android:fontFamily="@font/plus_jakarta_sans_semibold"
+            android:letterSpacing="0.12"
+            android:paddingHorizontal="11dp"
+            android:paddingVertical="4dp"
+            android:text="COFFEE WITH A VIEW"
+            android:textColor="#F4EAE2"
+            android:textSize="10.5sp" />
+
+        <!-- Bold Atmospheric Headline -->
+        <TextView
+            android:id="@+id/tvSlideTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/playfair_display_bold"
+            android:letterSpacing="0.01"
+            android:text="Artisanal Brews, Hillside Views"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+        <!-- Crisp Microcopy Subtitle -->
+        <TextView
+            android:id="@+id/tvSlideSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:lineSpacingExtra="2dp"
+            android:text="Panoramic valley terrace for your morning and evening coffee."
+            android:textColor="#DDD3CA"
+            android:textSize="12.5sp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
