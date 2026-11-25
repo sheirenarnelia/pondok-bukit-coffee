@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Brand Colors (Pondok Bukit Coffee) -->
-    <color name="brand_cream_bg">#EFDFBE</color>        <!-- Exact warm oat background from Pondok Bukit logo -->
-    <color name="brand_surface">#FFFFFF</color>         <!-- Card, Dialog & Input field background -->
-    <color name="brand_terracotta">#C4683C</color>      <!-- Primary Accent: Button, highlight -->
-    <color name="brand_terracotta_dark">#A7542C</color> <!-- Button pressed state -->
-    <color name="brand_espresso">#3E2723</color>        <!-- Judul, Teks Utama -->
-    <color name="brand_roast">#6D4C41</color>           <!-- Subtitle, Deskripsi -->
-    <color name="brand_border">#EADCCE</color>          <!-- Border & Divider -->
+    <!-- Modern Artisanal Coffee Palette (Pondok Bukit) -->
+    <!-- Clean, warm, bright ivory background (No more dull/muddy yellow) -->
+    <color name="brand_cream_bg">#FAF7F2</color>        
+    <color name="brand_surface">#FFFFFF</color>         
+    <color name="brand_surface_subtle">#F4EFEA</color>  
     
-    <!-- Neutral & Status Colors -->
-    <color name="text_hint">#A1887F</color>
-    <color name="status_diproses">#D9822B</color>       <!-- Amber -->
-    <color name="status_siap">#4E7C59</color>           <!-- Sage Green -->
-    <color name="status_selesai">#8D99AE</color>        <!-- Muted Slate -->
-    <color name="status_batal">#D00000</color>          <!-- Crimson -->
+    <!-- Brand Primary & Accents -->
+    <color name="brand_terracotta">#BD5A30</color>      <!-- Elegant Terracotta Clay -->
+    <color name="brand_terracotta_dark">#9C431F</color> <!-- Pressed / Focused -->
+    <color name="brand_terracotta_light">#F8ECE6</color><!-- Tint / Selected pills -->
+    
+    <!-- Typography & Neutrals -->
+    <color name="brand_espresso">#241713</color>        <!-- Deep Roast for high-contrast crisp text -->
+    <color name="brand_roast">#6B5C54</color>           <!-- Warm Muted Grey-Brown for body text -->
+    <color name="brand_caption">#988981</color>         <!-- Soft captions & placeholders -->
+    <color name="brand_border">#EAE2D8</color>          <!-- Hairline modern borders -->
+    
+    <!-- Status Colors -->
+    <color name="status_diproses">#D97724</color>       
+    <color name="status_siap">#437A55</color>           
+    <color name="status_selesai">#7C8594</color>        
+    <color name="status_batal">#C93B3B</color>          
 
-    <!-- Base Android colors -->
+    <!-- Standard Android -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

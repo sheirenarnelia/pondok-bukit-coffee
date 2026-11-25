@@ -6,60 +6,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/brand_cream_bg"
-    android:padding="24dp"
+    android:padding="28dp"
     tools:context=".MainActivity">
 
-    <!-- Seamless Logo Floating on Warm Background -->
+    <!-- Top Badge / Header Tag -->
+    <TextView
+        android:id="@+id/tvWelcomeBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_input_field"
+        android:backgroundTint="@color/brand_surface_subtle"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.08"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="7dp"
+        android:text="ARTISANAL COFFEE HOUSE"
+        android:textColor="@color/brand_roast"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Seamless Floating Logo (Blends directly with background, no card/box container) -->
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="290dp"
-        android:layout_height="290dp"
-        android:adjustViewBounds="true"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter"
         android:src="@drawable/logo_pondokbukit"
+        app:layout_constraintBottom_toTopOf="@+id/tvHeroTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeBadge"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <!-- Punchy Modern Headline -->
+    <TextView
+        android:id="@+id/tvHeroTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Your Cozy Corner\nfor Fresh Coffee"
+        android:textAlignment="center"
+        android:textColor="@color/brand_espresso"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvHeroSubtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+
+    <!-- Warm Subtext -->
+    <TextView
+        android:id="@+id/tvHeroSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="3dp"
+        android:text="Order handcrafted brews and delicious delights directly from your phone."
+        android:textAlignment="center"
+        android:textColor="@color/brand_roast"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/llButtonContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45" />
+        app:layout_constraintTop_toBottomOf="@+id/tvHeroTitle" />
 
-    <!-- Action Buttons -->
+    <!-- Bottom Action Buttons -->
     <LinearLayout
         android:id="@+id/llButtonContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <!-- Sign In Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
+            android:layout_height="56dp"
+            android:elevation="2dp"
             android:fontFamily="sans-serif-medium"
-            android:text="@string/btn_login"
+            android:letterSpacing="0.02"
+            android:text="Sign In"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:backgroundTint="@color/brand_terracotta"
-            app:cornerRadius="14dp" />
+            app:cornerRadius="16dp" />
 
+        <!-- Register Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegister"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
+            android:layout_height="56dp"
             android:layout_marginTop="12dp"
             android:fontFamily="sans-serif-medium"
-            android:text="@string/btn_register"
+            android:letterSpacing="0.02"
+            android:text="Create an Account"
             android:textAllCaps="false"
-            android:textColor="@color/brand_terracotta"
+            android:textColor="@color/brand_espresso"
             android:textSize="16sp"
-            app:cornerRadius="14dp"
-            app:strokeColor="@color/brand_terracotta"
+            app:cornerRadius="16dp"
+            app:strokeColor="@color/brand_border"
             app:strokeWidth="1.5dp" />
     </LinearLayout>
 

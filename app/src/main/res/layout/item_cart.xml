@@ -35,10 +35,12 @@
             android:id="@+id/ivDelete"
             android:layout_width="22dp"
             android:layout_height="22dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Remove item"
             android:src="@drawable/ic_delete"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#B3261E" />
 
         <!-- Customization Details (Size, Toppings, Note) -->
         <TextView
@@ -46,6 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:lineSpacingExtra="2dp"
             android:text="Size: Large • Extra Espresso Shot, Oat Milk\nNote: 'Less sweet please'"
             android:textColor="@color/brand_roast"
             android:textSize="13sp"
@@ -68,7 +71,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCustomization" />
 
-        <!-- Quantity Controls (- qty +) -->
+        <!-- Quantity Stepper Controls (- qty +) -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,18 +87,20 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@drawable/bg_circle_btn"
-                android:contentDescription="Decrease"
-                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:contentDescription="Decrease quantity"
+                android:padding="7dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_minus"
                 app:tint="@color/brand_espresso" />
 
             <!-- Quantity Number -->
             <TextView
                 android:id="@+id/tvQuantity"
-                android:layout_width="32dp"
+                android:layout_width="36dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:text="2"
+                android:text="1"
                 android:textColor="@color/brand_espresso"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -106,8 +111,10 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@drawable/bg_circle_btn"
-                android:contentDescription="Increase"
-                android:src="@android:drawable/ic_input_add"
+                android:contentDescription="Increase quantity"
+                android:padding="7dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_plus"
                 app:tint="@color/brand_terracotta" />
         </LinearLayout>
 
