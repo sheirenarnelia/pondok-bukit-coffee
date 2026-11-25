@@ -95,10 +95,11 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Temporary auth feedback before Firebase is integrated
-        Toast.makeText(this, "Logging in as: " + email, Toast.LENGTH_SHORT).show();
-        
-        // Note: In Day 2, FirebaseAuth.signInWithEmailAndPassword & role routing will be placed here.
+        // Feedback & navigate to Cart/Menu
+        Toast.makeText(this, "Signed in successfully as: " + email, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(LoginActivity.this, CartActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     // Helper text watcher
