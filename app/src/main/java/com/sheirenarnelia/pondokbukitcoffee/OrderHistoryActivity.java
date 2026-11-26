@@ -1,3 +1,4 @@
+
 package com.sheirenarnelia.pondokbukitcoffee;
 
 import android.os.Bundle;
@@ -9,9 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.ListenerRegistration;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class OrderHistoryActivity extends AppCompatActivity {
@@ -20,6 +25,10 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private TextView tvEmptyHistory;
     private ImageButton btnBackHistory;
 
+    private OrderHistoryAdapter adapter;
+    private FirebaseFirestore db;
+    private ListenerRegistration orderListener;
+
     private final List<Order> orders = new ArrayList<>();
 
     @Override
@@ -27,33 +36,106 @@ public class OrderHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
 
+        db = FirebaseFirestore.getInstance();
+
         rvOrderHistory = findViewById(R.id.rvOrderHistory);
         tvEmptyHistory = findViewById(R.id.tvEmptyHistory);
         btnBackHistory = findViewById(R.id.btnBackHistory);
 
         btnBackHistory.setOnClickListener(v -> finish());
 
-        loadSampleOrders(); // TODO Phase 4: replace with Firestore query where userId == current user
+        rvOrderHistory.setLayoutManager(
+                new LinearLayoutManager(this));
 
-        rvOrderHistory.setLayoutManager(new LinearLayoutManager(this));
-        rvOrderHistory.setAdapter(new OrderHistoryAdapter(orders));
+        adapter = new OrderHistoryAdapter(orders);
+        rvOrderHistory.setAdapter(adapter);
 
-        boolean empty = orders.isEmpty();
-        tvEmptyHistory.setVisibility(empty ? View.VISIBLE : View.GONE);
-        rvOrderHistory.setVisibility(empty ? View.GONE : View.VISIBLE);
+        updateEmptyState();
     }
 
-    private void loadSampleOrders() {
-        orders.add(new Order("001", "Sheirena", "Dine-in", "05", "",
-                "Less sweet please", Order.STATUS_DIPROSES, 88000, new Date(),
-                Arrays.asList(Order.line("Signature Latte", 2, "Large"))));
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadUserOrders();
+    }
 
-        orders.add(new Order("002", "Sheirena", "Pickup", "", "Sheirena",
-                "", Order.STATUS_SIAP, 36300, new Date(),
-                Arrays.asList(Order.line("Caramel Macchiato", 1, "Regular"))));
+    private void loadUserOrders() {
 
-        orders.add(new Order("003", "Sheirena", "Dine-in", "12", "",
-                "", Order.STATUS_SELESAI, 27500, new Date(),
-                Arrays.asList(Order.line("Signature Latte", 1, "Regular"))));
+        FirebaseUser user =
+                FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            tvEmptyHistory.setText("Please sign in to view your orders.");
+            return;
+        }
+
+        if (orderListener != null) {
+            orderListener.remove();
+        }
+
+        orderListener = db.collection("orders")
+                .whereEqualTo("userId", user.getUid())
+                .addSnapshotListener((snapshot, error) -> {
+
+                    if (error != null) {
+                        orders.clear();
+                        adapter.notifyDataSetChanged();
+                        updateEmptyState();
+                        tvEmptyHistory.setText("Failed to load order history.");
+                        return;
+                    }
+
+                    if (snapshot == null) return;
+
+                    orders.clear();
+
+                    for (DocumentSnapshot document : snapshot) {
+
+                        Order order = document.toObject(Order.class);
+
+                        if (order != null) {
+                            order.setId(document.getId());
+                            orders.add(order);
+                        }
+                    }
+
+                    orders.sort((a, b) -> {
+                        if (a.getCreatedAt() == null)
+                            return b.getCreatedAt() == null ? 0 : 1;
+                        if (b.getCreatedAt() == null) return -1;
+                        return b.getCreatedAt()
+                                .compareTo(a.getCreatedAt());
+                    });
+
+                    adapter.notifyDataSetChanged();
+                    updateEmptyState();
+                });
+    }
+
+    private void updateEmptyState() {
+
+        boolean empty = orders.isEmpty();
+
+        tvEmptyHistory.setText("No orders yet");
+
+        tvEmptyHistory.setVisibility(
+                empty ? View.VISIBLE : View.GONE);
+
+        rvOrderHistory.setVisibility(
+                empty ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (orderListener != null) {
+            orderListener.remove();
+            orderListener = null;
+        }
+
+        orders.clear();
+        adapter.notifyDataSetChanged();
+        updateEmptyState();
     }
 }

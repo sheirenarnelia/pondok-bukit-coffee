@@ -205,7 +205,7 @@ public class LoginActivity extends AppCompatActivity {
     private void routeUserByRole(String role, String fullName) {
         if ("admin".equalsIgnoreCase(role)) {
             Toast.makeText(this, "Welcome back, " + fullName + " (Admin)", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(LoginActivity.this, AdminOrderListActivity.class);
+            Intent intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
             startActivity(intent);
         } else {
             Toast.makeText(this, "Signed in successfully as " + fullName, Toast.LENGTH_SHORT).show();
@@ -214,6 +214,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         finish();
     }
+
 
     // Helper text watcher
     private abstract static class SimpleTextWatcher implements TextWatcher {

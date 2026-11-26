@@ -42,6 +42,28 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <!-- Order History Icon Button (Tugas Orang 3) -->
+        <FrameLayout
+            android:id="@+id/btnOrderHistory"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_toStartOf="@id/btnCart"
+            android:layout_marginEnd="8dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_circle_surface"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Order History">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@android:drawable/ic_menu_recent_history"
+                app:tint="@color/brand_espresso" />
+
+        </FrameLayout>
+
         <!-- Cart Icon Button -->
         <FrameLayout
             android:id="@+id/btnCart"

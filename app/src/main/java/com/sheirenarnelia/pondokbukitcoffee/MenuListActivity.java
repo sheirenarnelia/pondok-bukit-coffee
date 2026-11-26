@@ -1,3 +1,4 @@
+
 package com.sheirenarnelia.pondokbukitcoffee;
 
 import android.content.Intent;
@@ -34,6 +35,9 @@ public class MenuListActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private View btnCart;
 
+    // Order History (Tugas Orang 3)
+    private View btnOrderHistory;
+
     private FirebaseFirestore db;
     private String currentCategory = "All";
     private String currentSearchQuery = "";
@@ -66,6 +70,15 @@ public class MenuListActivity extends AppCompatActivity {
         tvItemCount = findViewById(R.id.tvItemCount);
         progressBar = findViewById(R.id.progressBar);
         btnCart = findViewById(R.id.btnCart);
+
+        // Order History Navigation (Tugas Orang 3)
+        btnOrderHistory = findViewById(R.id.btnOrderHistory);
+
+        btnOrderHistory.setOnClickListener(v -> {
+            startActivity(new Intent(
+                    MenuListActivity.this,
+                    OrderHistoryActivity.class));
+        });
 
         btnCart.setOnClickListener(v -> {
             try {

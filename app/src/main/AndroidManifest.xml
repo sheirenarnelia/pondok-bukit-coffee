@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -31,7 +31,6 @@
             android:name=".LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".RegisterActivity"
             android:exported="false"
@@ -42,7 +41,6 @@
             android:name=".MenuListActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".DetailMenuActivity"
             android:exported="false"
@@ -53,15 +51,26 @@
             android:name=".CartActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".CheckoutActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- Admin Workflow Screen (Tugas Orang 3) -->
+        <!-- Admin Dashboard Screen (Tugas Orang 3) -->
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Admin Order Management Screen (Tugas Orang 3) -->
         <activity
             android:name=".AdminOrderListActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Admin Menu Management Screen (Tugas Orang 3) -->
+        <activity
+            android:name=".AdminMenuActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
