@@ -49,8 +49,13 @@ public class MenuListActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        // Automatically seed menu data to Firestore if collection is empty
-        progressBar.setVisibility(View.VISIBLE);
+        // 1. Show local menu catalog immediately so the screen never gets stuck loading
+        allMenuList.clear();
+        allMenuList.addAll(FirebaseSeeder.createDefaultMenuList());
+        applyFilters();
+        progressBar.setVisibility(View.GONE);
+
+        // 2. Sync & seed with Firestore in background
         FirebaseSeeder.seedMenuDataIfEmpty(db, this::loadMenusFromFirestore);
     }
 
@@ -127,11 +132,11 @@ public class MenuListActivity extends AppCompatActivity {
                 .addSnapshotListener((queryDocumentSnapshots, error) -> {
                     progressBar.setVisibility(View.GONE);
                     if (error != null) {
-                        Toast.makeText(this, "Failed to load menus: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        // Keep displaying local catalog silently if Firestore fails/offline
                         return;
                     }
 
-                    if (queryDocumentSnapshots != null) {
+                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
                         allMenuList.clear();
                         for (DocumentSnapshot doc : queryDocumentSnapshots) {
                             MenuItem item = doc.toObject(MenuItem.class);
