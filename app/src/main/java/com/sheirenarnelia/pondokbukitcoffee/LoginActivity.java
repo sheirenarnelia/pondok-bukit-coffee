@@ -2,6 +2,8 @@ package com.sheirenarnelia.pondokbukitcoffee;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -111,6 +113,25 @@ public class LoginActivity extends AppCompatActivity {
         btnLoginSubmit.setEnabled(false);
         btnLoginSubmit.setText("Signing in...");
 
+        final boolean[] isHandled = {false};
+        Handler timeoutHandler = new Handler(Looper.getMainLooper());
+        Runnable timeoutRunnable = () -> {
+            if (!isHandled[0] && !isFinishing()) {
+                isHandled[0] = true;
+                if (userManager.isEmailRegistered(email) && userManager.checkPassword(email, password)) {
+                    String role = userManager.getUserRole(email);
+                    String fullName = userManager.getUserFullName(email);
+                    routeUserByRole(role, fullName);
+                } else {
+                    btnLoginSubmit.setEnabled(true);
+                    btnLoginSubmit.setText(R.string.btn_login);
+                    tilEmail.setError("Connection timeout. Please check your network and try again.");
+                    tilEmail.requestFocus();
+                }
+            }
+        };
+        timeoutHandler.postDelayed(timeoutRunnable, 6000);
+
         // 1. Try Firebase Authentication first
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
@@ -119,6 +140,10 @@ public class LoginActivity extends AppCompatActivity {
                     // Query role from Firestore
                     FirebaseFirestore.getInstance().collection("users").document(uid).get()
                             .addOnSuccessListener(documentSnapshot -> {
+                                if (isHandled[0] || isFinishing()) return;
+                                isHandled[0] = true;
+                                timeoutHandler.removeCallbacks(timeoutRunnable);
+
                                 String role = documentSnapshot.exists() && documentSnapshot.getString("role") != null
                                         ? documentSnapshot.getString("role")
                                         : "user";
@@ -129,6 +154,10 @@ public class LoginActivity extends AppCompatActivity {
                                 routeUserByRole(role, fullName);
                             })
                             .addOnFailureListener(e -> {
+                                if (isHandled[0] || isFinishing()) return;
+                                isHandled[0] = true;
+                                timeoutHandler.removeCallbacks(timeoutRunnable);
+
                                 // Firestore read failed, fallback to local role mapping
                                 String role = userManager.getUserRole(email);
                                 String fullName = userManager.getUserFullName(email);
@@ -136,6 +165,10 @@ public class LoginActivity extends AppCompatActivity {
                             });
                 })
                 .addOnFailureListener(e -> {
+                    if (isHandled[0] || isFinishing()) return;
+                    isHandled[0] = true;
+                    timeoutHandler.removeCallbacks(timeoutRunnable);
+
                     // 2. Fallback to Local Auth (for pre-seeded demo accounts or offline test)
                     if (userManager.isEmailRegistered(email)) {
                         if (userManager.checkPassword(email, password)) {

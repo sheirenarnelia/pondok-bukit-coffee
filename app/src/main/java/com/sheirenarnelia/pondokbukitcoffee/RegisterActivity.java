@@ -2,6 +2,8 @@ package com.sheirenarnelia.pondokbukitcoffee;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -154,12 +156,28 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegisterSubmit.setEnabled(false);
         btnRegisterSubmit.setText("Creating account...");
 
+        final boolean[] isHandled = {false};
+        Handler timeoutHandler = new Handler(Looper.getMainLooper());
+        Runnable timeoutRunnable = () -> {
+            if (!isHandled[0] && !isFinishing()) {
+                isHandled[0] = true;
+                userManager.registerUser(email, password, fullName, "user");
+                Toast.makeText(RegisterActivity.this, "Account created! Please sign in.", Toast.LENGTH_SHORT).show();
+                navigateToLogin(email);
+            }
+        };
+        timeoutHandler.postDelayed(timeoutRunnable, 6000);
+
         // 1. Firebase Authentication Registration
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
+                    if (isHandled[0] || isFinishing()) return;
+                    isHandled[0] = true;
+                    timeoutHandler.removeCallbacks(timeoutRunnable);
+
                     String uid = authResult.getUser() != null ? authResult.getUser().getUid() : "";
 
-                    // 2. Save user profile to Cloud Firestore
+                    // 2. Save user profile to Cloud Firestore in background (non-blocking)
                     Map<String, Object> userData = new HashMap<>();
                     userData.put("uid", uid);
                     userData.put("fullName", fullName);
@@ -167,19 +185,20 @@ public class RegisterActivity extends AppCompatActivity {
                     userData.put("role", "user");
                     userData.put("createdAt", FieldValue.serverTimestamp());
 
-                    FirebaseFirestore.getInstance().collection("users").document(uid).set(userData)
-                            .addOnSuccessListener(aVoid -> {
-                                userManager.registerUser(email, password, fullName, "user");
-                                Toast.makeText(RegisterActivity.this, "Account created successfully in Firebase!", Toast.LENGTH_SHORT).show();
-                                navigateToLogin(email);
-                            })
-                            .addOnFailureListener(e -> {
-                                userManager.registerUser(email, password, fullName, "user");
-                                Toast.makeText(RegisterActivity.this, "Account created in Auth!", Toast.LENGTH_SHORT).show();
-                                navigateToLogin(email);
-                            });
+                    if (!uid.isEmpty()) {
+                        FirebaseFirestore.getInstance().collection("users").document(uid).set(userData);
+                    }
+
+                    // 3. Cache locally & navigate immediately to Login
+                    userManager.registerUser(email, password, fullName, "user");
+                    Toast.makeText(RegisterActivity.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
+                    navigateToLogin(email);
                 })
                 .addOnFailureListener(e -> {
+                    if (isHandled[0] || isFinishing()) return;
+                    isHandled[0] = true;
+                    timeoutHandler.removeCallbacks(timeoutRunnable);
+
                     btnRegisterSubmit.setEnabled(true);
                     btnRegisterSubmit.setText(R.string.btn_register);
 
@@ -189,7 +208,7 @@ public class RegisterActivity extends AppCompatActivity {
                     } else {
                         // Offline / local backup fallback
                         userManager.registerUser(email, password, fullName, "user");
-                        Toast.makeText(RegisterActivity.this, "Registered locally (" + e.getMessage() + ")", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, "Account created locally!", Toast.LENGTH_SHORT).show();
                         navigateToLogin(email);
                     }
                 });
