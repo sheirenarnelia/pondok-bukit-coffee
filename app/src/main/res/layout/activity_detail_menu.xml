@@ -41,7 +41,7 @@
                     app:tint="@color/brand_espresso" />
             </FrameLayout>
 
-            <!-- Product Details Card / Container -->
+            <!-- Product Details Container -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_toStartOf="@+id/tvDetailPrice"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Creamy Latte Bukit"
+                        android:text="Menu Name"
                         android:textColor="@color/brand_espresso"
                         android:textSize="22sp"
                         android:textStyle="bold" />
@@ -85,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:lineSpacingExtra="3dp"
-                    android:text="Double-shot house espresso layered over cold velvety milk with a smooth caramel finish."
+                    android:text="Delicious authentic recipe from Pondok Bukit."
                     android:textColor="@color/brand_roast"
                     android:textSize="14sp" />
 
@@ -96,8 +96,59 @@
                     android:layout_marginBottom="16dp"
                     android:background="@color/brand_border" />
 
-                <!-- Cup Size Selection (RadioGroup) -->
+                <!-- PILIHAN SUHU (HOT / ICE) - Hanya untuk Minuman -->
+                <LinearLayout
+                    android:id="@+id/llTemperature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Temperature"
+                        android:textColor="@color/brand_espresso"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <RadioGroup
+                        android:id="@+id/rgTemperature"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/rbIced"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:text="Iced (Cold 🧊)"
+                            android:textColor="@color/brand_espresso"
+                            app:buttonTint="@color/brand_terracotta" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/rbHot"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Hot (Warm ☕)"
+                            android:textColor="@color/brand_espresso"
+                            app:buttonTint="@color/brand_terracotta" />
+                    </RadioGroup>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/brand_border" />
+                </LinearLayout>
+
+                <!-- Radio Button Selection (Cup Size for Drink / Portion for Food) -->
                 <TextView
+                    android:id="@+id/tvSelectionTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cup Size"
@@ -106,14 +157,14 @@
                     android:textStyle="bold" />
 
                 <RadioGroup
-                    android:id="@+id/rgCupSize"
+                    android:id="@+id/rgSelection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:orientation="vertical">
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/rbRegular"
+                        android:id="@+id/rbOption1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checked="true"
@@ -122,7 +173,7 @@
                         app:buttonTint="@color/brand_terracotta" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/rbLarge"
+                        android:id="@+id/rbOption2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Large (+Rp 4.000)"
@@ -137,8 +188,9 @@
                     android:layout_marginBottom="16dp"
                     android:background="@color/brand_border" />
 
-                <!-- Add-ons (Checkboxes) -->
+                <!-- Checkbox Add-ons -->
                 <TextView
+                    android:id="@+id/tvAddonsTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Add-ons / Toppings"
@@ -147,20 +199,29 @@
                     android:textStyle="bold" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/cbExtraShot"
+                    android:id="@+id/cbAddon1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Extra Espresso Shot (+Rp 5.000)"
+                    android:text="Cream Cheese (+Rp 5.000)"
                     android:textColor="@color/brand_espresso"
                     app:buttonTint="@color/brand_terracotta" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/cbOatMilk"
+                    android:id="@+id/cbAddon2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Oat Milk Substitute (+Rp 7.000)"
+                    android:text="Chewy Boba (+Rp 4.000)"
                     android:textColor="@color/brand_espresso"
+                    app:buttonTint="@color/brand_terracotta" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbAddon3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sea Salt Cream (+Rp 5.000)"
+                    android:textColor="@color/brand_espresso"
+                    android:visibility="gone"
                     app:buttonTint="@color/brand_terracotta" />
 
                 <View
@@ -170,11 +231,11 @@
                     android:layout_marginBottom="16dp"
                     android:background="@color/brand_border" />
 
-                <!-- Special Notes (TextInput) -->
+                <!-- Special Notes -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Notes"
+                    android:text="Special Instructions"
                     android:textColor="@color/brand_espresso"
                     android:textSize="15sp"
                     android:textStyle="bold" />

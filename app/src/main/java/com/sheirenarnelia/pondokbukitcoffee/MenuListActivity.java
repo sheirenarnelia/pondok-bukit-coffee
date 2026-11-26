@@ -47,11 +47,14 @@ public class MenuListActivity extends AppCompatActivity {
         setupRecyclerView();
         setupFilters();
 
-        db = FirebaseFirestore.getInstance();
+        // 1. Tampilkan menu instan (0 Detik)
+        allMenuList = FirebaseSeeder.createDefaultMenuList();
+        applyFilters();
 
-        // Automatically seed menu data to Firestore if collection is empty
-        progressBar.setVisibility(View.VISIBLE);
-        FirebaseSeeder.seedMenuDataIfEmpty(db, this::loadMenusFromFirestore);
+        // 2. Sinkronkan dengan Firebase di background
+        db = FirebaseFirestore.getInstance();
+        loadMenusFromFirestore();
+        FirebaseSeeder.seedMenuDataIfEmpty(db, null);
     }
 
     private void initViews() {
@@ -62,9 +65,12 @@ public class MenuListActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         btnCart = findViewById(R.id.btnCart);
 
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
+
         btnCart.setOnClickListener(v -> {
             try {
-                // Routing to CartActivity (Orang 1)
                 Class<?> cartClass = Class.forName("com.sheirenarnelia.pondokbukitcoffee.CartActivity");
                 startActivity(new Intent(this, cartClass));
             } catch (ClassNotFoundException e) {
@@ -86,7 +92,6 @@ public class MenuListActivity extends AppCompatActivity {
     }
 
     private void setupFilters() {
-        // Category Filter
         chipGroupCategory.setOnCheckedStateChangeListener((group, checkedIds) -> {
             if (checkedIds.isEmpty()) return;
             int selectedId = checkedIds.get(0);
@@ -106,7 +111,6 @@ public class MenuListActivity extends AppCompatActivity {
             applyFilters();
         });
 
-        // Search Filter
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -125,23 +129,21 @@ public class MenuListActivity extends AppCompatActivity {
     private void loadMenusFromFirestore() {
         db.collection("menus")
                 .addSnapshotListener((queryDocumentSnapshots, error) -> {
-                    progressBar.setVisibility(View.GONE);
-                    if (error != null) {
-                        Toast.makeText(this, "Failed to load menus: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (error != null || queryDocumentSnapshots == null || queryDocumentSnapshots.isEmpty()) {
                         return;
                     }
 
-                    if (queryDocumentSnapshots != null) {
-                        allMenuList.clear();
-                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
-                            MenuItem item = doc.toObject(MenuItem.class);
-                            if (item != null) {
-                                if (item.getId() == null) {
-                                    item.setId(doc.getId());
-                                }
-                                allMenuList.add(item);
-                            }
+                    List<MenuItem> updatedList = new ArrayList<>();
+                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                        MenuItem item = doc.toObject(MenuItem.class);
+                        if (item != null) {
+                            if (item.getId() == null) item.setId(doc.getId());
+                            updatedList.add(item);
                         }
+                    }
+
+                    if (!updatedList.isEmpty()) {
+                        allMenuList = updatedList;
                         applyFilters();
                     }
                 });

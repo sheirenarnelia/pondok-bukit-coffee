@@ -97,9 +97,16 @@ public class LoginActivity extends AppCompatActivity {
 
         // Role Routing Logic (1 App 2 Roles)
         if (email.equalsIgnoreCase("admin@pondokbukit.com") || email.toLowerCase().contains("admin")) {
-            Toast.makeText(this, "Welcome, Admin! Redirecting to Barista Dashboard...", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(LoginActivity.this, AdminOrderListActivity.class);
-            startActivity(intent);
+            Toast.makeText(this, "Welcome, Admin!", Toast.LENGTH_SHORT).show();
+            try {
+                Class<?> adminClass = Class.forName("com.sheirenarnelia.pondokbukitcoffee.AdminOrderListActivity");
+                Intent intent = new Intent(LoginActivity.this, adminClass);
+                startActivity(intent);
+            } catch (ClassNotFoundException e) {
+                Toast.makeText(this, "Admin Dashboard is being developed by Orang 3!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(LoginActivity.this, MenuListActivity.class);
+                startActivity(intent);
+            }
         } else {
             Toast.makeText(this, "Signed in successfully as: " + email, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this, MenuListActivity.class);
@@ -108,7 +115,6 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    // Helper text watcher
     private abstract static class SimpleTextWatcher implements TextWatcher {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
