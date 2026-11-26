@@ -187,17 +187,12 @@ public class DetailMenuActivity extends AppCompatActivity {
         );
         CartManager.getInstance().addItem(localCartItem);
 
-        // Save to Firestore under 'cart' collection for user
+        // Save to Firestore under 'cart' collection in background (non-blocking)
         db.collection("users").document(userId)
                 .collection("cart")
-                .add(cartItem)
-                .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(this, "Added " + quantity + "x " + (menuItem != null ? menuItem.getName() : "Item") + " to cart!", Toast.LENGTH_SHORT).show();
-                    finish();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Added to cart locally!", Toast.LENGTH_SHORT).show();
-                    finish();
-                });
+                .add(cartItem);
+
+        Toast.makeText(this, "Added " + quantity + "x " + (menuItem != null ? menuItem.getName() : "Item") + " to cart!", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

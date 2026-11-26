@@ -81,6 +81,15 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (cartAdapter != null) {
+            cartAdapter.notifyDataSetChanged();
+        }
+        updateCartSummary();
+    }
+
+    @Override
     public void onCartChanged() {
         updateCartSummary();
     }
