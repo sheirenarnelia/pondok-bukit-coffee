@@ -1,7 +1,6 @@
 package com.sheirenarnelia.pondokbukitcoffee;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CartManager {
@@ -9,12 +8,7 @@ public class CartManager {
     private final List<CartItem> cartItems = new ArrayList<>();
 
     private CartManager() {
-        // Pre-populate with realistic starter items for testing
-        List<String> toppings1 = new ArrayList<>(Arrays.asList("Extra Espresso Shot", "Oat Milk"));
-        cartItems.add(new CartItem("m1", "Pondok Bukit Signature Latte", "Large", toppings1, "Less sweet please", 25000, 2));
-
-        List<String> toppings2 = new ArrayList<>(Arrays.asList("Caramel Drizzle"));
-        cartItems.add(new CartItem("m2", "Caramel Macchiato", "Regular", toppings2, "Extra ice", 28000, 1));
+        // Cart starts empty by default; items are added from DetailMenuActivity
     }
 
     public static synchronized CartManager getInstance() {
