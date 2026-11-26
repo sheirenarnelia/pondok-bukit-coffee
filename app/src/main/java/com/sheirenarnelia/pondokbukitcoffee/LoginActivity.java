@@ -176,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
             Toast.makeText(this, "Signed in successfully as " + fullName, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(LoginActivity.this, CartActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MenuListActivity.class);
             startActivity(intent);
         }
         finish();

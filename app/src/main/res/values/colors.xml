@@ -15,6 +15,7 @@
     <color name="brand_espresso">#241713</color>        <!-- Deep Roast for high-contrast crisp text -->
     <color name="brand_roast">#6B5C54</color>           <!-- Warm Muted Grey-Brown for body text -->
     <color name="brand_caption">#988981</color>         <!-- Soft captions & placeholders -->
+    <color name="text_hint">#988981</color>
     <color name="brand_border">#EAE2D8</color>          <!-- Hairline modern borders -->
     
     <!-- Status Colors -->
