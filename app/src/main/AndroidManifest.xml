@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PondokBukitCoffee">
-        
+
         <!-- Welcome Screen (Launcher) -->
         <activity
             android:name=".MainActivity"
@@ -29,7 +29,6 @@
             android:name=".LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".RegisterActivity"
             android:exported="false"
@@ -40,18 +39,21 @@
             android:name=".CartActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".CheckoutActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- Admin Workflow Screen -->
+        <!-- Admin & Order History Screens (Tugas Orang 3) -->
         <activity
             android:name=".AdminOrderListActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".OrderHistoryActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
