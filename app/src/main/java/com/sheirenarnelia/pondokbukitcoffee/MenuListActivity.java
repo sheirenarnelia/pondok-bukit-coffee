@@ -51,16 +51,15 @@ public class MenuListActivity extends AppCompatActivity {
         setupRecyclerView();
         setupFilters();
 
-        db = FirebaseFirestore.getInstance();
-
-        // 1. Show local menu catalog immediately so the screen never gets stuck loading
+        // 1. Show default menu catalog immediately so the screen never gets stuck loading
         allMenuList.clear();
         allMenuList.addAll(FirebaseSeeder.createDefaultMenuList());
         applyFilters();
-        progressBar.setVisibility(View.GONE);
 
         // 2. Sync & seed with Firestore in background
-        FirebaseSeeder.seedMenuDataIfEmpty(db, this::loadMenusFromFirestore);
+        db = FirebaseFirestore.getInstance();
+        loadMenusFromFirestore();
+        FirebaseSeeder.seedMenuDataIfEmpty(db, null);
     }
 
     private void initViews() {
@@ -73,16 +72,18 @@ public class MenuListActivity extends AppCompatActivity {
 
         // Order History Navigation (Tugas Orang 3)
         btnOrderHistory = findViewById(R.id.btnOrderHistory);
-
         btnOrderHistory.setOnClickListener(v -> {
             startActivity(new Intent(
                     MenuListActivity.this,
                     OrderHistoryActivity.class));
         });
 
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
+
         btnCart.setOnClickListener(v -> {
             try {
-                // Routing to CartActivity (Orang 1)
                 Class<?> cartClass = Class.forName("com.sheirenarnelia.pondokbukitcoffee.CartActivity");
                 startActivity(new Intent(this, cartClass));
             } catch (ClassNotFoundException e) {
@@ -104,7 +105,6 @@ public class MenuListActivity extends AppCompatActivity {
     }
 
     private void setupFilters() {
-        // Category Filter
         chipGroupCategory.setOnCheckedStateChangeListener((group, checkedIds) -> {
             if (checkedIds.isEmpty()) return;
             int selectedId = checkedIds.get(0);
@@ -124,7 +124,6 @@ public class MenuListActivity extends AppCompatActivity {
             applyFilters();
         });
 
-        // Search Filter
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -143,23 +142,26 @@ public class MenuListActivity extends AppCompatActivity {
     private void loadMenusFromFirestore() {
         db.collection("menus")
                 .addSnapshotListener((queryDocumentSnapshots, error) -> {
-                    progressBar.setVisibility(View.GONE);
-                    if (error != null) {
-                        // Keep displaying local catalog silently if Firestore fails/offline
+                    if (progressBar != null) {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                    if (error != null || queryDocumentSnapshots == null || queryDocumentSnapshots.isEmpty()) {
                         return;
                     }
 
-                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                        allMenuList.clear();
-                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
-                            MenuItem item = doc.toObject(MenuItem.class);
-                            if (item != null) {
-                                if (item.getId() == null) {
-                                    item.setId(doc.getId());
-                                }
-                                allMenuList.add(item);
+                    List<MenuItem> updatedList = new ArrayList<>();
+                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                        MenuItem item = doc.toObject(MenuItem.class);
+                        if (item != null) {
+                            if (item.getId() == null) {
+                                item.setId(doc.getId());
                             }
+                            updatedList.add(item);
                         }
+                    }
+
+                    if (!updatedList.isEmpty()) {
+                        allMenuList = updatedList;
                         applyFilters();
                     }
                 });

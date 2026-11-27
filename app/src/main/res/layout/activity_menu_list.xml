@@ -76,10 +76,10 @@
             android:focusable="true">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_gravity="center"
-                android:src="@android:drawable/ic_menu_agenda"
+                android:src="@drawable/ic_shopping_cart"
                 app:tint="@color/brand_espresso" />
         </FrameLayout>
     </RelativeLayout>
@@ -127,7 +127,7 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Category Filter Chips -->
+    <!-- Category Filter Chips (Font Nyala & Background Putih Bersih) -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -151,7 +151,11 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="All"
-                app:chipBackgroundColor="@color/brand_surface" />
+                android:textColor="@color/brand_espresso"
+                android:textStyle="bold"
+                app:chipBackgroundColor="@color/brand_surface"
+                app:chipStrokeColor="@color/brand_border"
+                app:chipStrokeWidth="1.5dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipCoffee"
@@ -159,7 +163,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Coffee"
-                app:chipBackgroundColor="@color/brand_surface" />
+                android:textColor="@color/brand_espresso"
+                android:textStyle="bold"
+                app:chipBackgroundColor="@color/brand_surface"
+                app:chipStrokeColor="@color/brand_border"
+                app:chipStrokeWidth="1.5dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipNonCoffee"
@@ -167,7 +175,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Non-Coffee"
-                app:chipBackgroundColor="@color/brand_surface" />
+                android:textColor="@color/brand_espresso"
+                android:textStyle="bold"
+                app:chipBackgroundColor="@color/brand_surface"
+                app:chipStrokeColor="@color/brand_border"
+                app:chipStrokeWidth="1.5dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipMainCourse"
@@ -175,7 +187,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Main Course"
-                app:chipBackgroundColor="@color/brand_surface" />
+                android:textColor="@color/brand_espresso"
+                android:textStyle="bold"
+                app:chipBackgroundColor="@color/brand_surface"
+                app:chipStrokeColor="@color/brand_border"
+                app:chipStrokeWidth="1.5dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipSnacks"
@@ -183,7 +199,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Snacks"
-                app:chipBackgroundColor="@color/brand_surface" />
+                android:textColor="@color/brand_espresso"
+                android:textStyle="bold"
+                app:chipBackgroundColor="@color/brand_surface"
+                app:chipStrokeColor="@color/brand_border"
+                app:chipStrokeWidth="1.5dp" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 
